@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sector 7 | Player Profile</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="s7-header">
+    <div class="s7-header-inner">
+
+      <div class="s7-logo-block">
+        <div class="s7-logo-mark">S7</div>
+        <div class="s7-logo-text">
+          <span class="s7-logo-title">SECTOR 7</span>
+          <span class="s7-logo-sub">Black Ops II Competitive Network</span>
+        </div>
+      </div>
+
+      <nav class="s7-nav">
+        <a href="index.html">Home</a>
+        <a href="teams.html">Teams</a>
+        <a href="players.html">Players</a>
+        <a href="matches.html">Matches</a>
+        <a href="rankings.html">Rankings</a>
+        <a href="sniper.html">Sniper</a>
+        <a href="seasonal.html">Seasonal</a>
+      </nav>
+
+      <div class="s7-auth-block">
+        <button id="login-btn" class="s7-btn s7-btn-ghost">Login</button>
+        <button id="logout-btn" class="s7-btn s7-btn-accent" style="display:none;">Logout</button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MAIN LAYOUT -->
+  <main class="s7-main">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="s7-sidebar">
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Community</h3>
+        <a href="#">News</a>
+        <a href="#">Events</a>
+        <a href="#">Forums</a>
+        <a href="#">Discord</a>
+        <a href="#">Media</a>
+        <a href="#">Hall of Fame</a>
+        <a href="#">Rules</a>
+      </section>
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Competitive</h3>
+        <a href="#">Ladders</a>
+        <a href="#">XP Rankings</a>
+        <a href="#">Matches</a>
+        <a href="#">Disputes</a>
+        <a href="#">Support</a>
+      </section>
+
+      <button class="s7-cta">Join Sector 7 – Build Your Legacy</button>
+
+    </aside>
+
+    <!-- CENTER CONTENT -->
+    <section class="s7-content">
+
+      <!-- PLAYER HEADER -->
+      <div class="s7-card">
+        <h2 id="player-username">Loading...</h2>
+
+        <div id="player-header">
+          <img id="player-avatar" class="profile-avatar" src="assets/default-avatar.png" />
+          <div>
+            <p id="player-rank-name">Rank: Loading...</p>
+            <p id="player-xp">XP: Loading...</p>
+          </div>
+        </div>
+
+        <!-- XP / RANK BAR -->
+        <div class="rank-bar">
+          <div id="player-rank-progress" class="rank-progress"></div>
+        </div>
+        <p id="player-rank-xp" class="rank-xp-text"></p>
+      </div>
+
+      <!-- SEASONAL STATS -->
+      <div class="s7-card">
+        <h3 class="s7-panel-title">Seasonal Stats</h3>
+
+        <p><strong>Seasonal Sniper ELO:</strong> <span id="player-seasonal-sniper-elo">Loading...</span></p>
+        <div class="rank-bar">
+          <div id="player-seasonal-sniper-progress" class="rank-progress"></div>
+        </div>
+
+        <p><strong>Seasonal Competitive ELO:</strong> <span id="player-seasonal-comp-elo">Loading...</span></p>
+        <div class="rank-bar">
+          <div id="player-seasonal-comp-progress" class="rank-progress"></div>
+        </div>
+
+        <p><strong>Seasonal Casual XP:</strong> <span id="player-seasonal-casual-xp">Loading...</span></p>
+        <div class="rank-bar">
+          <div id="player-seasonal-casual-progress" class="rank-progress"></div>
+        </div>
+      </div>
+
+      <!-- MATCH HISTORY -->
+      <div class="s7-card">
+        <h3 class="s7-panel-title">Match History</h3>
+        <div id="player-match-history"></div>
+      </div>
+
+    </section>
+
+    <!-- RIGHT SIDEBAR -->
+    <aside class="s7-right">
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Player Info</h3>
+        <p>Stats update automatically after every match.</p>
+        <p>Ranks and XP update instantly.</p>
+      </section>
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Tips</h3>
+        <p>Sniper matches affect sniper ELO.</p>
+        <p>Competitive matches affect competitive ELO.</p>
+        <p>Casual matches increase XP only.</p>
+      </section>
+
+    </aside>
+
+  </main>
+
+  <!-- NOTIFICATION -->
+  <div id="notification"></div>
+
+  <!-- MAIN JS -->
+  <script src="assets/app.js"></script>
+
+  <script>
+    // Load player by ID from URL
+    const params = new URLSearchParams(window.location.search);
+    const playerId = params.get("id");
+
+    async function loadPlayerPage() {
+      if (!playerId) return;
+
+      const { data: profile } = await supabase
+        .from("sector7_users")
+        .select("*")
+        .eq("id", playerId)
+        .single();
+
+      if (!profile) return;
+
+      // Fill UI
+      document.getElementById("player-username").textContent = profile.username;
+      document.getElementById("player-rank-name").textContent = "Rank: " + profile.rank_name;
+      document.getElementById("player-xp").textContent = "XP: " + profile.xp;
+
+      // XP bar
+      const xpPercent = (profile.xp / profile.rank_xp_needed) * 100;
+      document.getElementById("player-rank-progress").style.width = xpPercent + "%";
+      document.getElementById("player-rank-xp").textContent =
+        profile.xp + " / " + profile.rank_xp_needed;
+
+      // Seasonal stats
+      document.getElementById("player-seasonal-sniper-elo").textContent =
+        profile.seasonal_sniper_elo;
+      document.getElementById("player-seasonal-sniper-progress").style.width =
+        profile.seasonal_sniper_elo / 20 + "%";
+
+      document.getElementById("player-seasonal-comp-elo").textContent =
+        profile.seasonal_competitive_elo;
+      document.getElementById("player-seasonal-comp-progress").style.width =
+        profile.seasonal_competitive_elo / 20 + "%";
+
+      document.getElementById("player-seasonal-casual-xp").textContent =
+        profile.seasonal_casual_xp;
+      document.getElementById("player-seasonal-casual-progress").style.width =
+        profile.seasonal_casual_xp / 10 + "%";
+
+      loadPlayerMatchHistory(playerId);
+    }
+
+    async function loadPlayerMatchHistory(id) {
+      const container = document.getElementById("player-match-history");
+
+      const { data: matches } = await supabase
+        .from("matches")
+        .select("*")
+        .or(`winner_id.eq.${id},loser_id.eq.${id}`)
+        .order("created_at", { ascending: false });
+
+      if (!matches || matches.length === 0) {
+        container.innerHTML = "<p>No matches yet.</p>";
+        return;
+      }
+
+      container.innerHTML = matches
+        .map(m => {
+          const result = m.winner_id === id ? "WIN" : "LOSS";
+          return `<div class="leaderboard-card">${result} vs ${m.opponent_username}</div>`;
+        })
+        .join("");
+    }
+
+    loadPlayerPage();
+  </script>
+
+</body>
+</html>
