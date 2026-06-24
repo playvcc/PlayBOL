@@ -2,13 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Sector 7 – The Ultimate Black Ops 2 Competitive Network</title>
+  <title>Sector 7 – Home</title>
   <link rel="stylesheet" href="assets/style.css">
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </head>
 <body data-page="home">
-  <!-- NAVBAR -->
   <nav>
     <ul>
       <li><a href="index.html">Home</a></li>
@@ -28,78 +26,30 @@
     </ul>
   </nav>
 
-  <!-- HERO -->
   <header class="hero">
-    <div class="hero-overlay">
-      <img src="assets/img/logo-sector7.png" alt="Sector 7 Logo" class="hero-logo">
-      <h1>Sector 7</h1>
-      <p>The Ultimate Black Ops 2 Competitive Network</p>
-    </div>
+    <h1>Sector 7</h1>
+    <p>The Ultimate Black Ops 2 Competitive Network.</p>
   </header>
 
-  <!-- MAIN CONTENT -->
   <main>
-    <section id="community-overview">
-      <h2>Community Overview</h2>
-      <p>Sector 7 is a structured BO2 clan network with two core divisions:</p>
-      <ul>
-        <li><strong>Casual Division:</strong> Open lobbies, zombies/custom games, fun nights, LFG, no pressure.</li>
-        <li><strong>Competitive Division:</strong> Ranked teams, 4v4/5v5, BO1 regular season, BO3 playoffs.</li>
-      </ul>
+    <section>
+      <h2>Top Teams</h2>
+      <ul id="top-teams-list"></ul>
     </section>
 
-    <section id="community-ranks">
-      <h2>Community Ranks</h2>
-      <ul>
-        <li><strong>Recruit:</strong> 0–499 XP</li>
-        <li><strong>Member:</strong> 500–1,499 XP</li>
-        <li><strong>Competitor:</strong> 1,500–4,999 XP</li>
-        <li><strong>Elite:</strong> 5,000–9,999 XP</li>
-        <li><strong>Officer:</strong> 10,000–24,999 XP</li>
-        <li><strong>Captain:</strong> 25,000–49,999 XP</li>
-      </ul>
-      <p>Progression is based on activity, performance, and team contribution—no favoritism.</p>
+    <section>
+      <h2>Top Players</h2>
+      <ul id="top-players-list"></ul>
     </section>
 
-    <section id="season-system">
-      <h2>Season System</h2>
-      <p>Each season lasts 6–8 weeks:</p>
-      <ul>
-        <li>Weeks 1–6: Ranked ladder matches</li>
-        <li>Week 7: Qualification phase</li>
-        <li>Week 8: Playoffs & Finals</li>
-      </ul>
-    </section>
-
-    <section id="top-teams">
-      <h2>Top Teams – 4v4 MLG</h2>
-      <ul id="top-teams-list">
-        <!-- Filled by app.js from Supabase -->
-      </ul>
-    </section>
-
-    <section id="live-matches">
+    <section>
       <h2>Live Matches</h2>
-      <ul id="live-matches-list">
-        <!-- Filled by app.js -->
-      </ul>
-    </section>
-
-    <section id="top-players">
-      <h2>Top Players – XP</h2>
-      <ul id="top-players-list">
-        <!-- Filled by app.js -->
-      </ul>
-    </section>
-
-    <section id="legacy-system">
-      <h2>Legacy System</h2>
-      <p>Long-term members earn Hall of Fame entries and permanent recognition for their impact on Sector 7.</p>
+      <ul id="live-matches-list"></ul>
     </section>
   </main>
 
   <footer>
-    <p>Sector 7 &copy; 2026 – Compete. Rise. Dominate.</p>
+    <p>Sector 7 &copy; 2026</p>
   </footer>
 
   <script src="assets/app.js"></script>
