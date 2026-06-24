@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sector 7 | Seasonal</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="s7-header">
+    <div class="s7-header-inner">
+
+      <div class="s7-logo-block">
+        <div class="s7-logo-mark">S7</div>
+        <div class="s7-logo-text">
+          <span class="s7-logo-title">SECTOR 7</span>
+          <span class="s7-logo-sub">Black Ops II Competitive Network</span>
+        </div>
+      </div>
+
+      <nav class="s7-nav">
+        <a href="index.html">Home</a>
+        <a href="teams.html">Teams</a>
+        <a href="players.html">Players</a>
+        <a href="matches.html">Matches</a>
+        <a href="rankings.html">Rankings</a>
+        <a href="sniper.html">Sniper</a>
+        <a href="seasonal.html">Seasonal</a>
+      </nav>
+
+      <div class="s7-auth-block">
+        <button id="login-btn" class="s7-btn s7-btn-ghost">Login</button>
+        <button id="logout-btn" class="s7-btn s7-btn-accent" style="display:none;">Logout</button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MAIN LAYOUT -->
+  <main class="s7-main">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="s7-sidebar">
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Community</h3>
+        <a href="#">News</a>
+        <a href="#">Events</a>
+        <a href="#">Forums</a>
+        <a href="#">Discord</a>
+        <a href="#">Media</a>
+        <a href="#">Hall of Fame</a>
+        <a href="#">Rules</a>
+      </section>
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Competitive</h3>
+        <a href="#">Ladders</a>
+        <a href="#">XP Rankings</a>
+        <a href="#">Matches</a>
+        <a href="#">Disputes</a>
+        <a href="#">Support</a>
+      </section>
+
+      <button class="s7-cta">Join Sector 7 – Build Your Legacy</button>
+
+    </aside>
+
+    <!-- CENTER CONTENT -->
+    <section class="s7-content">
+
+      <!-- SEASONAL OVERVIEW -->
+      <div class="s7-card">
+        <h2>Seasonal Overview</h2>
+        <p style="color:var(--s7-text-muted); margin-bottom:10px;">
+          Seasonal stats reset every season. Earn sniper ELO, competitive ELO, and seasonal XP.
+        </p>
+
+        <p><strong>Your Seasonal Sniper ELO:</strong> <span id="seasonal-sniper-elo">Loading...</span></p>
+        <div class="rank-bar">
+          <div id="seasonal-sniper-progress" class="rank-progress"></div>
+        </div>
+
+        <p><strong>Your Seasonal Competitive ELO:</strong> <span id="seasonal-comp-elo">Loading...</span></p>
+        <div class="rank-bar">
+          <div id="seasonal-comp-progress" class="rank-progress"></div>
+        </div>
+
+        <p><strong>Your Seasonal Casual XP:</strong> <span id="seasonal-casual-xp">Loading...</span></p>
+        <div class="rank-bar">
+          <div id="seasonal-casual-progress" class="rank-progress"></div>
+        </div>
+      </div>
+
+      <!-- SEASONAL LEADERBOARDS -->
+      <div class="s7-card">
+        <h2>Seasonal Sniper Leaderboard</h2>
+        <div id="seasonal-sniper-leaderboard"></div>
+      </div>
+
+      <div class="s7-card">
+        <h2>Seasonal Competitive Leaderboard</h2>
+        <div id="seasonal-competitive-leaderboard"></div>
+      </div>
+
+      <div class="s7-card">
+        <h2>Seasonal Casual XP Leaderboard</h2>
+        <div id="seasonal-casual-leaderboard"></div>
+      </div>
+
+    </section>
+
+    <!-- RIGHT SIDEBAR -->
+    <aside class="s7-right">
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Season Info</h3>
+        <p>Seasonal stats reset every season.</p>
+        <p>Earn badges for top placements.</p>
+        <p>Seasonal ELO and XP update instantly.</p>
+      </section>
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Tips</h3>
+        <p>Play sniper to climb sniper ELO.</p>
+        <p>Play competitive to climb competitive ELO.</p>
+        <p>Casual matches increase seasonal XP.</p>
+      </section>
+
+    </aside>
+
+  </main>
+
+  <!-- NOTIFICATION -->
+  <div id="notification"></div>
+
+  <!-- MAIN JS -->
+  <script src="assets/app.js"></script>
+
+</body>
+</html>
