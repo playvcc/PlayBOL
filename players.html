@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Players — BO2 League</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <header id="top-nav"><div class="top-nav-inner"><a href="index.html" class="nav-logo"><span class="logo-hex">⬡</span><span class="logo-text">BO2<span class="logo-accent">LEAGUE</span></span></a><div class="nav-right"><span class="admin-indicator" id="admin-badge" style="display:none">⚡ Admin</span><button class="nav-auth-btn" id="login-btn" onclick="openModal('login-modal')">Sign In</button><button class="nav-auth-btn ghost" id="logout-btn" style="display:none">Sign Out</button><button class="hamburger-btn" id="hamburger-btn" aria-label="Menu"><span></span><span></span><span></span></button></div></div></header>
+  <nav id="sub-nav"><div class="sub-nav-inner"><a href="index.html" class="sub-nav-link">🏠 Home</a><a href="matches.html" class="sub-nav-link">🎮 Matches</a><a href="leaderboard.html" class="sub-nav-link">🏆 Leaderboard</a><a href="schedule.html" class="sub-nav-link">📅 Schedule</a><a href="teams.html" class="sub-nav-link">🛡 Teams</a><a href="players.html" class="sub-nav-link">👤 Players</a><a href="rules.html" class="sub-nav-link">📋 Rulebook</a><a href="announcements.html" class="sub-nav-link">📢 News</a><div class="sub-nav-divider"></div><a href="admin.html" class="sub-nav-link admin-only" style="display:none">⚙️ Admin</a></div></nav>
+  <nav id="mobile-drawer"><a href="index.html" class="drawer-link">🏠 Home</a><a href="matches.html" class="drawer-link">🎮 Matches</a><a href="leaderboard.html" class="drawer-link">🏆 Leaderboard</a><a href="schedule.html" class="drawer-link">📅 Schedule</a><div class="drawer-divider"></div><a href="teams.html" class="drawer-link">🛡 Teams</a><a href="players.html" class="drawer-link">👤 Players</a><a href="rules.html" class="drawer-link">📋 Rulebook</a><a href="announcements.html" class="drawer-link">📢 News</a><div class="drawer-divider"></div><a href="admin.html" class="drawer-link admin-only" style="display:none">⚙️ Admin Panel</a></nav>
+
+  <div class="page-wrap">
+    <div class="container">
+      <div class="mb-24">
+        <div class="section-label">Season 1 Roster</div>
+        <h1 class="section-title">PLAYERS</h1>
+      </div>
+      <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap">
+        <input id="player-search" type="text" placeholder="Search gamertag or team…" style="max-width:320px"/>
+        <select id="player-tier-filter" style="max-width:160px">
+          <option value="">All Tiers</option>
+          <option>Prestige</option><option>Elite</option><option>Challenger</option>
+          <option>Contender</option><option>Prospect</option><option>Recruit</option>
+        </select>
+        <select id="player-status-filter" style="max-width:160px">
+          <option value="">All Status</option>
+          <option>Signed</option><option>Free Agent</option><option>Sub</option>
+        </select>
+      </div>
+      <div class="card" style="overflow-x:auto">
+        <table class="data-table" id="players-table">
+          <thead><tr><th>Player</th><th>Platform</th><th>Tier</th><th>Team</th><th>K/D</th><th>W–L</th><th>Status</th></tr></thead>
+          <tbody id="players-tbody">
+            <tr><td><span class="td-name">xXSniper_ReaperXx</span></td><td>Xbox</td><td><span class="badge badge-orange">Prestige</span></td><td style="color:var(--orange)">Phantom Squad</td><td>2.84</td><td>34–8</td><td><span class="badge badge-green">Signed</span></td></tr>
+            <tr><td><span class="td-name">NightOwl_7</span></td><td>PC</td><td><span class="badge badge-orange">Prestige</span></td><td style="color:var(--orange)">Black Flag</td><td>2.61</td><td>30–10</td><td><span class="badge badge-green">Signed</span></td></tr>
+            <tr><td><span class="td-name">T3mpo</span></td><td>Xbox</td><td><span class="badge badge-grey">Elite</span></td><td style="color:var(--orange)">Crimson War</td><td>2.47</td><td>28–12</td><td><span class="badge badge-green">Signed</span></td></tr>
+            <tr><td><span class="td-name">Clutch_Factor</span></td><td>Xbox</td><td><span class="badge badge-grey">Elite</span></td><td style="color:var(--orange)">Iron Ghost</td><td>2.33</td><td>26–12</td><td><span class="badge badge-green">Signed</span></td></tr>
+            <tr><td><span class="td-name">AK_Fury</span></td><td>PC</td><td><span class="badge badge-grey">Challenger</span></td><td style="color:var(--orange)">Venom Unit</td><td>2.18</td><td>24–12</td><td><span class="badge badge-green">Signed</span></td></tr>
+            <tr><td><span class="td-name">GhostMode_23</span></td><td>Xbox</td><td><span class="badge badge-grey">Challenger</span></td><td>—</td><td>1.99</td><td>22–12</td><td><span class="badge badge-grey">Free Agent</span></td></tr>
+            <tr><td><span class="td-name">Hex_Breaker</span></td><td>PC</td><td><span class="badge badge-grey">Contender</span></td><td>—</td><td>1.95</td><td>21–13</td><td><span class="badge badge-grey">Free Agent</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="login-modal"><div class="modal"><div class="modal-header"><h2 class="modal-title">ADMIN LOGIN</h2><button class="modal-close">✕</button></div><form id="login-form"><div class="form-group"><label class="form-label">Email</label><input type="email" id="login-email" name="email" required/></div><div class="form-group"><label class="form-label">Password</label><input type="password" id="login-password" name="password" required/></div><button type="submit" class="btn btn-primary btn-full" style="margin-top:8px">Sign In</button></form></div></div>
+  <div id="toast-container"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    // Search/filter for players table
+    const searchEl = document.getElementById('player-search');
+    const tierEl   = document.getElementById('player-tier-filter');
+    const statEl   = document.getElementById('player-status-filter');
+    function filterPlayers() {
+      const q = searchEl.value.toLowerCase();
+      const t = tierEl.value.toLowerCase();
+      const s = statEl.value.toLowerCase();
+      document.querySelectorAll('#players-tbody tr').forEach(row => {
+        const text = row.textContent.toLowerCase();
+        const tierMatch   = !t || text.includes(t);
+        const statusMatch = !s || text.includes(s);
+        const qMatch      = !q || text.includes(q);
+        row.style.display = tierMatch && statusMatch && qMatch ? '' : 'none';
+      });
+    }
+    searchEl.addEventListener('input', filterPlayers);
+    tierEl.addEventListener('change', filterPlayers);
+    statEl.addEventListener('change', filterPlayers);
+  </script>
+</body>
+</html>

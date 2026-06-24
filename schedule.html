@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Schedule — BO2 League</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    .sched-week-label { font-family:var(--font-h);font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);display:flex;align-items:center;gap:12px;margin:32px 0 12px; }
+    .sched-week-label::after { content:'';flex:1;height:1px;background:var(--border); }
+    .sched-row { display:grid;grid-template-columns:150px 1fr 130px 90px;align-items:center;padding:14px 20px;border-bottom:1px solid var(--border);gap:12px;transition:background var(--trans); }
+    .sched-row:hover { background:var(--card-hover); }
+    .sched-row:last-child { border-bottom:none; }
+    .sched-head { background:var(--grey-dk);font-family:var(--font-h);font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--grey-lt); }
+    .sched-highlight { background:rgba(232,100,10,.07); }
+    .sched-day { font-family:var(--font-h);font-weight:700;font-size:15px;color:var(--white); }
+    .sched-event { font-size:14px;color:var(--grey-pale); }
+    .sched-time { color:var(--orange);font-family:var(--font-h);font-weight:600;font-size:14px; }
+    .sched-fmt { font-family:var(--font-h);font-size:12px;font-weight:700;letter-spacing:.08em;background:var(--grey-dk);color:var(--grey-pale);padding:3px 10px;border-radius:2px;text-align:center; }
+    .cal-row { display:grid;grid-template-columns:180px 1fr 160px;align-items:center;padding:14px 20px;border-bottom:1px solid var(--border);gap:12px; }
+    .cal-row:last-child { border-bottom:none; }
+    @media(max-width:600px){ .sched-row { grid-template-columns:110px 1fr 100px; } .sched-row .sched-fmt { display:none; } .cal-row { grid-template-columns:120px 1fr; } .cal-row span:last-child { display:none; } }
+  </style>
+</head>
+<body>
+  <header id="top-nav"><div class="top-nav-inner"><a href="index.html" class="nav-logo"><span class="logo-hex">⬡</span><span class="logo-text">BO2<span class="logo-accent">LEAGUE</span></span></a><div class="nav-right"><span class="admin-indicator" id="admin-badge" style="display:none">⚡ Admin</span><button class="nav-auth-btn" id="login-btn" onclick="openModal('login-modal')">Sign In</button><button class="nav-auth-btn ghost" id="logout-btn" style="display:none">Sign Out</button><button class="hamburger-btn" id="hamburger-btn" aria-label="Menu"><span></span><span></span><span></span></button></div></div></header>
+  <nav id="sub-nav"><div class="sub-nav-inner"><a href="index.html" class="sub-nav-link"><span class="snl-icon">🏠</span> Home</a><a href="matches.html" class="sub-nav-link"><span class="snl-icon">🎮</span> Matches</a><a href="leaderboard.html" class="sub-nav-link"><span class="snl-icon">🏆</span> Leaderboard</a><a href="schedule.html" class="sub-nav-link"><span class="snl-icon">📅</span> Schedule</a><a href="teams.html" class="sub-nav-link"><span class="snl-icon">🛡</span> Teams</a><a href="players.html" class="sub-nav-link"><span class="snl-icon">👤</span> Players</a><a href="rules.html" class="sub-nav-link"><span class="snl-icon">📋</span> Rulebook</a><a href="announcements.html" class="sub-nav-link"><span class="snl-icon">📢</span> News</a><div class="sub-nav-divider"></div><a href="admin.html" class="sub-nav-link admin-only" style="display:none"><span class="snl-icon">⚙️</span> Admin</a></div></nav>
+  <nav id="mobile-drawer"><div class="drawer-section-label">Main</div><a href="index.html" class="drawer-link"><span class="dl-icon">🏠</span> Home</a><a href="matches.html" class="drawer-link"><span class="dl-icon">🎮</span> Matches</a><a href="leaderboard.html" class="drawer-link"><span class="dl-icon">🏆</span> Leaderboard</a><a href="schedule.html" class="drawer-link"><span class="dl-icon">📅</span> Schedule</a><div class="drawer-divider"></div><div class="drawer-section-label">League</div><a href="teams.html" class="drawer-link"><span class="dl-icon">🛡</span> Teams</a><a href="players.html" class="drawer-link"><span class="dl-icon">👤</span> Players</a><a href="rules.html" class="drawer-link"><span class="dl-icon">📋</span> Rulebook</a><a href="announcements.html" class="drawer-link"><span class="dl-icon">📢</span> News</a><div class="drawer-divider"></div><a href="admin.html" class="drawer-link admin-only" style="display:none"><span class="dl-icon">⚙️</span> Admin Panel</a></nav>
+
+  <div class="page-wrap">
+    <div class="container">
+      <div class="mb-24">
+        <div class="section-label">Season 1</div>
+        <h1 class="section-title">SCHEDULE</h1>
+        <p style="color:var(--grey-pale)">All matches begin at 10:00 PM EST unless noted. Combines run every Friday at 8:00 PM EST.</p>
+      </div>
+
+      <!-- Weekly recurring schedule -->
+      <div class="section-label" style="margin-bottom:12px">Weekly Recurring</div>
+      <div class="card" style="margin-bottom:32px;overflow-x:auto">
+        <div class="sched-row sched-head"><span>Day</span><span>Event</span><span>Time (EST)</span><span>Format</span></div>
+        <div class="sched-row"><span class="sched-day">Monday</span><span class="sched-event">Prestige Division Matches</span><span class="sched-time">9:00 PM</span><span class="sched-fmt">BO3</span></div>
+        <div class="sched-row"><span class="sched-day">Tuesday</span><span class="sched-event">Regular Season Matches</span><span class="sched-time">10:00 PM</span><span class="sched-fmt">BO1</span></div>
+        <div class="sched-row"><span class="sched-day">Thursday</span><span class="sched-event">Regular Season Matches</span><span class="sched-time">10:00 PM</span><span class="sched-fmt">BO1</span></div>
+        <div class="sched-row sched-highlight"><span class="sched-day" style="color:var(--orange)">Friday</span><span class="sched-event">🎯 Combine Night — Open Signup</span><span class="sched-time">8:00 PM</span><span class="sched-fmt">5v5</span></div>
+        <div class="sched-row"><span class="sched-day">Saturday</span><span class="sched-event">Free Agent League (FAL)</span><span class="sched-time">9:00 PM</span><span class="sched-fmt">BO1</span></div>
+      </div>
+
+      <!-- Season calendar -->
+      <div class="section-label" style="margin-bottom:12px">Season 1 Calendar</div>
+      <div class="card" style="overflow-x:auto">
+        <div class="cal-row" style="background:var(--grey-dk);font-family:var(--font-h);font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--grey-lt)">
+          <span>Date</span><span>Milestone</span><span>Status</span>
+        </div>
+        <div class="cal-row"><span style="color:var(--grey-pale);font-family:var(--font-h);font-size:14px">May 1</span><span style="color:var(--grey-pale)">Season 1 Signups Open</span><span class="badge badge-green">✓ Complete</span></div>
+        <div class="cal-row"><span style="color:var(--grey-pale);font-family:var(--font-h);font-size:14px">May 15 – Jun 6</span><span style="color:var(--grey-pale)">Combine Season</span><span class="badge badge-green">✓ Complete</span></div>
+        <div class="cal-row"><span style="color:var(--grey-pale);font-family:var(--font-h);font-size:14px">Jun 8</span><span style="color:var(--grey-pale)">Franchise Draft</span><span class="badge badge-green">✓ Complete</span></div>
+        <div class="cal-row" style="background:rgba(232,100,10,.07)"><span style="color:var(--white);font-family:var(--font-h);font-size:14px;font-weight:700">Jun 10 – Jul 11</span><span style="color:var(--white);font-weight:600">Regular Season (Weeks 1–8)</span><span class="badge badge-live">● In Progress</span></div>
+        <div class="cal-row"><span style="color:var(--grey-pale);font-family:var(--font-h);font-size:14px">Jul 13</span><span style="color:var(--grey-pale)">Playoff Seeding Announced</span><span class="badge badge-grey">Upcoming</span></div>
+        <div class="cal-row"><span style="color:var(--grey-pale);font-family:var(--font-h);font-size:14px">Jul 15 – Jul 20</span><span style="color:var(--grey-pale)">Playoffs — Quarterfinals &amp; Semis</span><span class="badge badge-grey">Upcoming</span></div>
+        <div class="cal-row"><span style="color:var(--grey-pale);font-family:var(--font-h);font-size:14px">Jul 22</span><span style="color:var(--white);font-weight:600">🏆 Season 1 Championship</span><span class="badge badge-grey">Upcoming</span></div>
+      </div>
+
+      <div style="margin-top:28px;text-align:center">
+        <a href="matches.html" class="btn btn-outline">View Live Match Results →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="login-modal"><div class="modal"><div class="modal-header"><h2 class="modal-title">ADMIN LOGIN</h2><button class="modal-close">✕</button></div><form id="login-form"><div class="form-group"><label class="form-label">Email</label><input type="email" id="login-email" name="email" required/></div><div class="form-group"><label class="form-label">Password</label><input type="password" id="login-password" name="password" required/></div><button type="submit" class="btn btn-primary btn-full" style="margin-top:8px">Sign In</button></form></div></div>
+  <div id="toast-container"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
