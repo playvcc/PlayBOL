@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Logging Out...</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+
+<body class="auth-center">
+
+  <div class="auth-card">
+    <h2>Logging Out...</h2>
+    <p>You will be redirected shortly.</p>
+  </div>
+
+  <script>
+    async function logoutNow() {
+      await supabase.auth.signOut();
+      window.location.href = "index.html";
+    }
+
+    logoutNow();
+  </script>
+
+</body>
+</html>
