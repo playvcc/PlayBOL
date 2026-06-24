@@ -1,14 +1,13 @@
 // assets/app.js
 
-// 1) INIT SUPABASE (YOUR REAL PROJECT)
 const SUPABASE_URL = "https://absqahnhiydzoztddlzl.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFic3FhaG5oaXlkem96dGRkbHpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNDc3NTMsImV4cCI6MjA5NzcyMzc1M30.q9QLWIu4bSbs7Zr98K4l-AiCNzbNcLo4nAUyXVaYsSg";
+const SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFic3FhaG5oaXlkem96dGRkbHpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNDc3NTMsImV4cCI6MjA5NzcyMzc1M30.q9QLWIu4bSbs7Zr98K4l-AiCNzbNcLo4nAUyXVaYsSg";
 
 const supabase = window.supabase
   ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
   : null;
 
-// 2) PAGE ROUTER
 document.addEventListener("DOMContentLoaded", () => {
   const page = document.body.getAttribute("data-page");
 
@@ -56,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// 3) HOME
+// HOME
 async function loadHome() {
   if (!supabase) return;
 
@@ -88,13 +87,15 @@ async function loadHome() {
     players.forEach((p) => {
       const li = document.createElement("li");
       li.textContent = `${p.gamertag} — ${p.xp} XP`;
-      playersList.appendChild(li);
+      list.appendChild(li);
     });
   }
 
   const { data: matches } = await supabase
     .from("matches")
-    .select("*, home_team:teams!matches_home_team_id_fkey(name), away_team:teams!matches_away_team_id_fkey(name)")
+    .select(
+      "*, home_team:teams!matches_home_team_id_fkey(name), away_team:teams!matches_away_team_id_fkey(name)"
+    )
     .eq("status", "live")
     .limit(5);
 
@@ -103,13 +104,15 @@ async function loadHome() {
     liveList.innerHTML = "";
     matches.forEach((m) => {
       const li = document.createElement("li");
-      li.textContent = `${m.home_team.name} vs ${m.away_team.name} — ${m.mode || ""}: ${m.map_name || ""} (LIVE)`;
+      li.textContent = `${m.home_team.name} vs ${m.away_team.name} — ${
+        m.mode || ""
+      }: ${m.map_name || ""} (LIVE)`;
       liveList.appendChild(li);
     });
   }
 }
 
-// 4) LADDERS
+// LADDERS
 async function loadLadders() {
   if (!supabase) return;
   const { data } = await supabase.from("ladders").select("*");
@@ -128,7 +131,7 @@ async function loadLadders() {
   });
 }
 
-// 5) TEAMS
+// TEAMS
 async function loadTeams() {
   if (!supabase) return;
   const { data } = await supabase
@@ -151,7 +154,7 @@ async function loadTeams() {
   });
 }
 
-// 6) DIVISIONS
+// DIVISIONS
 async function loadDivisions() {
   if (!supabase) return;
   const { data } = await supabase.from("divisions").select("*");
@@ -165,7 +168,7 @@ async function loadDivisions() {
   });
 }
 
-// 7) PLAYERS
+// PLAYERS
 async function loadPlayers() {
   if (!supabase) return;
   const { data } = await supabase
@@ -188,12 +191,14 @@ async function loadPlayers() {
   });
 }
 
-// 8) MATCHES
+// MATCHES
 async function loadMatches() {
   if (!supabase) return;
   const { data } = await supabase
     .from("matches")
-    .select("*, home_team:teams!matches_home_team_id_fkey(name), away_team:teams!matches_away_team_id_fkey(name)")
+    .select(
+      "*, home_team:teams!matches_home_team_id_fkey(name), away_team:teams!matches_away_team_id_fkey(name)"
+    )
     .order("created_at", { ascending: false })
     .limit(20);
 
@@ -213,7 +218,7 @@ async function loadMatches() {
   });
 }
 
-// 9) RANKINGS
+// RANKINGS
 async function loadRankings() {
   if (!supabase) return;
   const { data } = await supabase
@@ -236,7 +241,7 @@ async function loadRankings() {
   });
 }
 
-// 10) TOURNAMENTS
+// TOURNAMENTS
 async function loadTournaments() {
   if (!supabase) return;
   const { data } = await supabase.from("tournaments").select("*");
@@ -245,12 +250,14 @@ async function loadTournaments() {
   list.innerHTML = "";
   data.forEach((t) => {
     const li = document.createElement("li");
-    li.innerHTML = `<strong>${t.name}</strong> — ${t.status} — ${t.start_date || ""}`;
+    li.innerHTML = `<strong>${t.name}</strong> — ${t.status} — ${
+      t.start_date || ""
+    }`;
     list.appendChild(li);
   });
 }
 
-// 11) RECRUITMENT FORM
+// RECRUITMENT
 function initRecruitmentForm() {
   const form = document.getElementById("recruitment-form");
   const msg = document.getElementById("recruitment-message");
@@ -271,7 +278,9 @@ function initRecruitmentForm() {
       reason: formData.get("reason"),
     };
 
-    const { error } = await supabase.from("recruitment_applications").insert(payload);
+    const { error } = await supabase
+      .from("recruitment_applications")
+      .insert(payload);
     msg.textContent = error
       ? "Error submitting application."
       : "Application submitted. Staff will review soon.";
@@ -280,7 +289,7 @@ function initRecruitmentForm() {
   });
 }
 
-// 12) SUPPORT FORM
+// SUPPORT
 function initSupportForm() {
   const form = document.getElementById("support-form");
   const msg = document.getElementById("support-message");
@@ -300,7 +309,9 @@ function initSupportForm() {
       details: formData.get("details"),
     };
 
-    const { error } = await supabase.from("support_tickets").insert(payload);
+    const { error } = await supabase
+      .from("support_tickets")
+      .insert(payload);
     msg.textContent = error
       ? "Error submitting ticket."
       : "Ticket submitted. Staff will respond soon.";
@@ -309,7 +320,7 @@ function initSupportForm() {
   });
 }
 
-// 13) HALL OF FAME
+// HALL OF FAME
 async function loadHallOfFame() {
   if (!supabase) return;
   const { data } = await supabase
@@ -322,12 +333,14 @@ async function loadHallOfFame() {
   list.innerHTML = "";
   data.forEach((entry) => {
     const li = document.createElement("li");
-    li.innerHTML = `<strong>${entry.name}</strong> (${entry.year}) — ${entry.description}`;
+    li.innerHTML = `<strong>${entry.name}</strong> (${entry.year}) — ${
+      entry.description
+    }`;
     list.appendChild(li);
   });
 }
 
-// 14) DIVISIONS SELECT FOR TEAM CREATION
+// DIVISION SELECT FOR TEAM CREATION
 async function loadDivisionsIntoSelect() {
   if (!supabase) return;
   const { data } = await supabase.from("divisions").select("*");
@@ -343,7 +356,7 @@ async function loadDivisionsIntoSelect() {
   });
 }
 
-// 15) TEAM CREATION (CAPTAIN)
+// TEAM CREATION (CAPTAIN)
 async function initTeamCreation() {
   const form = document.getElementById("create-team-form");
   const msg = document.getElementById("team-create-message");
@@ -379,7 +392,84 @@ async function initTeamCreation() {
   });
 }
 
-// 16) ADMIN LOGIN + DASHBOARD
+// ADMIN
 function initAdmin() {
   const form = document.getElementById("admin-login-form");
-  const msg = document.getElementById("admin-login
+  const msg = document.getElementById("admin-login-message");
+  const dashboard = document.getElementById("admin-dashboard");
+  const refreshBtn = document.getElementById("refresh-data");
+
+  if (!form || !supabase) return;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const email = formData.get("email");
+    const password = formData.get("password");
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      msg.textContent = "Login failed.";
+    } else {
+      msg.textContent = "Logged in.";
+      form.style.display = "none";
+      if (dashboard) dashboard.style.display = "block";
+      loadPendingTeams();
+    }
+  });
+
+  if (refreshBtn) {
+    refreshBtn.addEventListener("click", () => {
+      loadPendingTeams();
+    });
+  }
+}
+
+// PENDING TEAM REQUESTS
+async function loadPendingTeams() {
+  if (!supabase) return;
+
+  const { data } = await supabase
+    .from("team_creation_requests")
+    .select("*, divisions(name)")
+    .eq("approved", false);
+
+  const list = document.getElementById("pending-team-list");
+  if (!list || !data) return;
+
+  list.innerHTML = "";
+  data.forEach((req) => {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <strong>${req.team_name}</strong> (${req.divisions.name})
+      <button onclick="approveTeam('${req.id}', '${req.team_name}', '${req.division_id}', '${req.captain_id}')">
+        Approve
+      </button>
+    `;
+    list.appendChild(li);
+  });
+}
+
+// APPROVE TEAM
+async function approveTeam(id, name, division_id, captain_id) {
+  if (!supabase) return;
+
+  await supabase.from("teams").insert({
+    name,
+    division_id,
+    created_by: captain_id,
+  });
+
+  await supabase
+    .from("team_creation_requests")
+    .update({ approved: true })
+    .eq("id", id);
+
+  loadPendingTeams();
+  loadTeams();
+}
