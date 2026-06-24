@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sector 7 | Register</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="s7-header">
+    <div class="s7-header-inner">
+
+      <div class="s7-logo-block">
+        <div class="s7-logo-mark">S7</div>
+        <div class="s7-logo-text">
+          <span class="s7-logo-title">SECTOR 7</span>
+          <span class="s7-logo-sub">Black Ops II Competitive Network</span>
+        </div>
+      </div>
+
+      <nav class="s7-nav">
+        <a href="index.html">Home</a>
+        <a href="login.html">Login</a>
+        <a href="register.html">Register</a>
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="s7-main auth-center">
+
+    <div class="auth-card">
+      <h2>Create Account</h2>
+
+      <label>Email</label>
+      <input id="reg-email" class="s7-input" placeholder="Enter email" />
+
+      <label>Password</label>
+      <input id="reg-password" type="password" class="s7-input" placeholder="Enter password" />
+
+      <label>Username</label>
+      <input id="reg-username" class="s7-input" placeholder="Choose a username" />
+
+      <button id="register-btn" class="s7-btn s7-btn-accent" style="margin-top:10px;">
+        Register
+      </button>
+
+      <p style="margin-top:15px; text-align:center;">
+        Already have an account?
+        <a href="login.html" class="s7-link">Login here</a>
+      </p>
+    </div>
+
+  </main>
+
+  <!-- NOTIFICATION -->
+  <div id="notification"></div>
+
+  <script src="assets/app.js"></script>
+
+  <script>
+    async function registerUser() {
+      const email = document.getElementById("reg-email").value;
+      const password = document.getElementById("reg-password").value;
+      const username = document.getElementById("reg-username").value;
+
+      // Create auth user
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password
+      });
+
+      if (error) return notify(error.message);
+
+      // Create profile row
+      await supabase.from("sector7_users").insert({
+        id: data.user.id,
+        username,
+        xp: 0,
+        rank: "Rookie",
+        wins: 0,
+        losses: 0
+      });
+
+      notify("Account created");
+      window.location.href = "profile.html";
+    }
+
+    document.getElementById("register-btn").onclick = registerUser;
+  </script>
+
+</body>
+</html>
