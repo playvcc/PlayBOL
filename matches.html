@@ -1,1 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sector 7 – Matches</title>
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <header class="s7-header">
+    <div class="s7-header-top">
+      <div class="s7-logo">
+        <span class="s7-logo-main">SECTOR 7</span>
+        <span class="s7-logo-sub">Matches &amp; Reporting</span>
+      </div>
+      <nav class="s7-nav">
+        <a href="index.html">Home</a>
+        <a href="ladders.html">Ladders</a>
+        <a href="matches.html" class="active">Matches</a>
+        <a href="teams.html">Teams</a>
+        <a href="players.html">Players</a>
+        <a href="divisions.html">Divisions</a>
+        <a href="rankings.html">Rankings</a>
+        <a href="hall-of-fame.html">Hall of Fame</a>
+        <a href="recruitment.html">Recruitment</a>
+        <a href="rules.html">Rules</a>
+        <a href="support.html">Support</a>
+        <a href="admin.html">Admin</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="s7-main">
+    <section class="s7-layout">
+      <div class="s7-column s7-column-left">
+        <div class="card">
+          <h2>Recent Matches</h2>
+          <table class="s7-table" id="recent-matches-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Teams</th>
+                <th>Mode</th>
+                <th>Result</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Now</td>
+                <td>Retro Ops vs Oblivion</td>
+                <td>HP: Raid</td>
+                <td>Live</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="s7-column s7-column-center">
+        <div class="card">
+          <h2>Report Match</h2>
+          <form id="report-match-form">
+            <div class="form-row">
+              <label>Reporting Team</label>
+              <input type="text" name="reporting_team" required>
+            </div>
+            <div class="form-row">
+              <label>Opponent Team</label>
+              <input type="text" name="opponent_team" required>
+            </div>
+            <div class="form-row">
+              <label>Ladder</label>
+              <select name="ladder" required>
+                <option value="4v4_mlg">4v4 MLG BO2</option>
+                <option value="2v2">2v2 BO2</option>
+                <option value="sniper">Sniper Ladder</option>
+                <option value="casual">Casual Ladder</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label>Mode</label>
+              <select name="mode" required>
+                <option value="hp_raid">Hardpoint – Raid</option>
+                <option value="hp_standoff">Hardpoint – Standoff</option>
+                <option value="snd_raid">S&amp;D – Raid</option>
+                <option value="snd_standoff">S&amp;D – Standoff</option>
+                <option value="ctf_raid">CTF – Raid</option>
+                <option value="ctf_slums">CTF – Slums</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label>Scoreline</label>
+              <input type="text" name="score" placeholder="e.g. 3–1" required>
+            </div>
+            <div class="form-row">
+              <label>Winner</label>
+              <select name="winner" required>
+                <option value="reporting">Reporting Team</option>
+                <option value="opponent">Opponent Team</option>
+              </select>
+            </div>
+            <button type="submit" class="btn-primary">Submit Match</button>
+          </form>
+          <p class="s7-note" id="report-match-status"></p>
+        </div>
+      </div>
+
+      <div class="s7-column s7-column-right">
+        <div class="card">
+          <h2>Disputes</h2>
+          <p>If there is a disagreement about a match result, open a dispute ticket in the Support tab and include:</p>
+          <ul>
+            <li>Match ID</li>
+            <li>Teams involved</li>
+            <li>Evidence (screenshots, clips)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="s7-footer">
+    <p>&copy; 2026 Sector 7 – Matches</p>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
 
