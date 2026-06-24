@@ -34,7 +34,7 @@ body {
 }
 
 .s7-header-inner {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 10px 20px;
   display: flex;
@@ -42,41 +42,11 @@ body {
   gap: 24px;
 }
 
-.s7-logo-block {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.s7-logo-mark {
-  width: 40px;
-  height: 40px;
-  border-radius: 6px;
-  background: radial-gradient(circle at 30% 20%, #ffb35a, #ff7a1a 40%, #3b1a00 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 18px;
-  color: #050608;
-  box-shadow: 0 0 18px rgba(255, 122, 26, 0.7);
-}
-
-.s7-logo-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
-}
-
-.s7-logo-title {
-  font-size: 16px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-
-.s7-logo-sub {
-  font-size: 11px;
-  color: var(--s7-text-muted);
+.s7-logo-img {
+  height: 48px;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 0 8px rgba(255, 122, 26, 0.6));
 }
 
 .s7-nav {
@@ -141,12 +111,13 @@ body {
 /* LAYOUT */
 
 .s7-main {
-  max-width: 1200px;
+  max-width: 1400px; /* FIXED — website now full size */
+  width: 100%;
   margin: 20px auto 40px;
-  padding: 0 20px;
+  padding: 0 30px;
   display: grid;
-  grid-template-columns: 230px minmax(0, 1fr) 260px;
-  gap: 18px;
+  grid-template-columns: 260px minmax(0, 1fr) 300px; /* FIXED — wider layout */
+  gap: 24px;
 }
 
 .s7-sidebar,
@@ -213,14 +184,14 @@ body {
   padding: 14px 16px;
 }
 
-/* HERO (HOME PAGE) */
+/* HERO (FIXED PATH) */
 
 .s7-hero {
   position: relative;
   border-radius: 10px;
   overflow: hidden;
   border: 1px solid var(--s7-border);
-  background-image: url("assets/sector7-hero.jpg"); /* update path to your image */
+  background-image: url("assets/img/sector7-hero.jpg"); /* FIXED PATH */
   background-size: cover;
   background-position: center;
   height: 260px;
@@ -260,48 +231,6 @@ body {
   margin-right: 6px;
 }
 
-/* RANK / XP BARS */
-
-.rank-bar {
-  width: 100%;
-  height: 8px;
-  background: #050608;
-  border-radius: 999px;
-  overflow: hidden;
-  border: 1px solid var(--s7-border);
-  margin-top: 6px;
-}
-
-.rank-progress {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #ff7a1a, #ffb35a);
-  transition: width 0.3s ease-out;
-}
-
-.rank-xp-text {
-  font-size: 12px;
-  color: var(--s7-text-muted);
-  margin-top: 4px;
-}
-
-/* PROFILE */
-
-.profile-avatar {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  border: 2px solid var(--s7-accent);
-  object-fit: cover;
-  margin-right: 12px;
-}
-
-#profile-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
 /* LEADERBOARD CARDS */
 
 .leaderboard-card {
@@ -310,47 +239,7 @@ body {
   font-size: 13px;
 }
 
-/* PENDING MATCH CARDS */
-
-.pending-match-card {
-  border-radius: 6px;
-  border: 1px solid var(--s7-border);
-  padding: 8px 10px;
-  margin-bottom: 6px;
-  background: #0b0d12;
-  font-size: 13px;
-}
-
-.pending-match-card .actions {
-  margin-top: 6px;
-  display: flex;
-  gap: 6px;
-}
-
-.pending-match-card button {
-  font-size: 11px;
-  padding: 4px 8px;
-  border-radius: 4px;
-  border: 1px solid var(--s7-border);
-  background: #151822;
-  color: var(--s7-text-main);
-  cursor: pointer;
-}
-
-.pending-match-card button:hover {
-  border-color: var(--s7-accent);
-}
-
-/* BADGES */
-
-.team-badges img,
-.badge-row img {
-  width: 48px;
-  height: 48px;
-  margin-right: 6px;
-}
-
-/* NOTIFICATIONS (TOAST) */
+/* NOTIFICATIONS */
 
 #notification {
   position: fixed;
@@ -370,28 +259,12 @@ body {
   z-index: 100;
 }
 
-#notification.show {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
-}
-
-/* RANK UP ANIMATION */
-
-.rank-up-flash {
-  animation: rankFlash 1s ease-out;
-}
-
-@keyframes rankFlash {
-  0% { background: #ffffff; color: #000; }
-  100% { background: transparent; color: inherit; }
-}
-
-/* SIMPLE RESPONSIVE TWEAKS */
+/* RESPONSIVE FIXES */
 
 @media (max-width: 960px) {
   .s7-main {
     grid-template-columns: 1fr;
+    padding: 0 20px;
   }
 
   .s7-sidebar,
