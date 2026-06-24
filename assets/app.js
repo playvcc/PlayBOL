@@ -1,8 +1,8 @@
 // assets/app.js
 
-// 1) INIT SUPABASE
-const SUPABASE_URL = "YOUR_SUPABASE_URL";
-const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+// 1) INIT SUPABASE (YOUR REAL PROJECT)
+const SUPABASE_URL = "https://absqahnhiydzoztddlzl.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFic3FhaG5oaXlkem96dGRkbHpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNDc3NTMsImV4cCI6MjA5NzcyMzc1M30.q9QLWIu4bSbs7Zr98K4l-AiCNzbNcLo4nAUyXVaYsSg";
 
 const supabase = window.supabase
   ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
@@ -60,7 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
 async function loadHome() {
   if (!supabase) return;
 
-  // Top teams
   const { data: teams } = await supabase
     .from("teams")
     .select("*")
@@ -77,7 +76,6 @@ async function loadHome() {
     });
   }
 
-  // Top players
   const { data: players } = await supabase
     .from("players")
     .select("*")
@@ -94,7 +92,6 @@ async function loadHome() {
     });
   }
 
-  // Live matches
   const { data: matches } = await supabase
     .from("matches")
     .select("*, home_team:teams!matches_home_team_id_fkey(name), away_team:teams!matches_away_team_id_fkey(name)")
@@ -131,7 +128,7 @@ async function loadLadders() {
   });
 }
 
-// 5) TEAMS (LIST)
+// 5) TEAMS
 async function loadTeams() {
   if (!supabase) return;
   const { data } = await supabase
@@ -154,7 +151,7 @@ async function loadTeams() {
   });
 }
 
-// 6) DIVISIONS (LIST)
+// 6) DIVISIONS
 async function loadDivisions() {
   if (!supabase) return;
   const { data } = await supabase.from("divisions").select("*");
@@ -385,81 +382,4 @@ async function initTeamCreation() {
 // 16) ADMIN LOGIN + DASHBOARD
 function initAdmin() {
   const form = document.getElementById("admin-login-form");
-  const msg = document.getElementById("admin-login-message");
-  const dashboard = document.getElementById("admin-dashboard");
-  const refreshBtn = document.getElementById("refresh-data");
-
-  if (!form || !supabase) return;
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(form);
-    const email = formData.get("email");
-    const password = formData.get("password");
-
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (error) {
-      msg.textContent = "Login failed.";
-    } else {
-      msg.textContent = "Logged in.";
-      form.style.display = "none";
-      if (dashboard) dashboard.style.display = "block";
-      loadPendingTeams();
-    }
-  });
-
-  if (refreshBtn) {
-    refreshBtn.addEventListener("click", () => {
-      loadPendingTeams();
-    });
-  }
-}
-
-// 17) ADMIN: LOAD PENDING TEAM REQUESTS
-async function loadPendingTeams() {
-  if (!supabase) return;
-
-  const { data } = await supabase
-    .from("team_creation_requests")
-    .select("*, divisions(name)")
-    .eq("approved", false);
-
-  const list = document.getElementById("pending-team-list");
-  if (!list || !data) return;
-
-  list.innerHTML = "";
-  data.forEach((req) => {
-    const li = document.createElement("li");
-    li.innerHTML = `
-      <strong>${req.team_name}</strong> (${req.divisions.name})
-      <button onclick="approveTeam('${req.id}', '${req.team_name}', '${req.division_id}', '${req.captain_id}')">
-        Approve
-      </button>
-    `;
-    list.appendChild(li);
-  });
-}
-
-// 18) ADMIN: APPROVE TEAM
-async function approveTeam(id, name, division_id, captain_id) {
-  if (!supabase) return;
-
-  await supabase.from("teams").insert({
-    name,
-    division_id,
-    created_by: captain_id,
-  });
-
-  await supabase
-    .from("team_creation_requests")
-    .update({ approved: true })
-    .eq("id", id);
-
-  loadPendingTeams();
-  loadTeams(); // refresh teams page if admin is viewing it
-}
+  const msg = document.getElementById("admin-login
