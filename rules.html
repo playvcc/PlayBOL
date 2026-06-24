@@ -1,46 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Rules – Sector 7</title>
-  <link rel="stylesheet" href="assets/style.css">
+  <meta charset="UTF-8" />
+  <title>Sector 7 | Rules</title>
+  <link rel="stylesheet" href="assets/style.css" />
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </head>
-<body data-page="rules">
-  <nav>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="ladders.html">Ladders</a></li>
-      <li><a href="tournaments.html">Tournaments</a></li>
-      <li><a href="teams.html">Teams</a></li>
-      <li><a href="players.html">Players</a></li>
-      <li><a href="divisions.html">Divisions</a></li>
-      <li><a href="matches.html">Matches</a></li>
-      <li><a href="rankings.html">Rankings</a></li>
-      <li><a href="recruitment.html">Recruitment</a></li>
-      <li><a href="store.html">Store</a></li>
-      <li><a href="rules.html">Rules</a></li>
-      <li><a href="support.html">Support</a></li>
-      <li><a href="hall-of-fame.html">Hall of Fame</a></li>
-      <li><a href="admin.html">Admin</a></li>
-    </ul>
-  </nav>
 
-  <header class="sub-hero">
-    <h1>Rules</h1>
-    <p>Competitive and community guidelines.</p>
+<body>
+
+  <!-- HEADER -->
+  <header class="s7-header">
+    <div class="s7-header-inner">
+
+      <div class="s7-logo-block">
+        <div class="s7-logo-mark">S7</div>
+        <div class="s7-logo-text">
+          <span class="s7-logo-title">SECTOR 7</span>
+          <span class="s7-logo-sub">Black Ops II Competitive Network</span>
+        </div>
+      </div>
+
+      <nav class="s7-nav">
+        <a href="index.html">Home</a>
+        <a href="teams.html">Teams</a>
+        <a href="players.html">Players</a>
+        <a href="matches.html">Matches</a>
+        <a href="rankings.html">Rankings</a>
+        <a href="sniper.html">Sniper</a>
+        <a href="seasonal.html">Seasonal</a>
+        <a href="ladders.html">Ladders</a>
+        <a href="disputes.html">Disputes</a>
+        <a href="support.html">Support</a>
+        <a href="rules.html">Rules</a>
+      </nav>
+
+      <div class="s7-auth-block">
+        <button id="login-btn" class="s7-btn s7-btn-ghost">Login</button>
+        <button id="logout-btn" class="s7-btn s7-btn-accent" style="display:none;">Logout</button>
+      </div>
+
+    </div>
   </header>
 
-  <main>
-    <section>
-      <p>Write your rulebook here (MLG rules, map pool, etc.).</p>
+  <!-- MAIN LAYOUT -->
+  <main class="s7-main">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="s7-sidebar">
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Community</h3>
+        <a href="#">News</a>
+        <a href="#">Events</a>
+        <a href="#">Forums</a>
+        <a href="#">Discord</a>
+        <a href="#">Media</a>
+        <a href="#">Hall of Fame</a>
+        <a href="rules.html">Rules</a>
+      </section>
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Competitive</h3>
+        <a href="ladders.html">Ladders</a>
+        <a href="rankings.html">XP Rankings</a>
+        <a href="matches.html">Matches</a>
+        <a href="disputes.html">Disputes</a>
+        <a href="support.html">Support</a>
+      </section>
+
+      <button class="s7-cta">Join Sector 7 – Build Your Legacy</button>
+
+    </aside>
+
+    <!-- CENTER CONTENT -->
+    <section class="s7-content">
+
+      <div class="s7-card">
+        <h2>Sector 7 Rules</h2>
+        <p style="color:var(--s7-text-muted); margin-bottom:10px;">
+          All players and teams must follow these rules to compete fairly.
+        </p>
+      </div>
+
+      <!-- GENERAL RULES -->
+      <div class="s7-card">
+        <h3 class="s7-panel-title">General Rules</h3>
+
+        <ul class="s7-rules-list">
+          <li>No cheating, modding, or exploiting game mechanics.</li>
+          <li>No harassment, racism, or toxic behavior.</li>
+          <li>All players must use their registered username.</li>
+          <li>Match results must be reported accurately.</li>
+          <li>False disputes or reports may result in penalties.</li>
+        </ul>
+      </div>
+
+      <!-- MATCH RULES -->
+      <div class="s7-card">
+        <h3 class="s7-panel-title">Match Rules</h3>
+
+        <ul class="s7-rules-list">
+          <li>Both players must confirm match results.</li>
+          <li>Disconnections count as a loss unless agreed otherwise.</li>
+          <li>Proof is required for disputes (screenshots or video).</li>
+          <li>Matches must follow the selected ladder’s ruleset.</li>
+        </ul>
+      </div>
+
+      <!-- LADDER RULES -->
+      <div class="s7-card">
+        <h3 class="s7-panel-title">Ladder Rules</h3>
+
+        <ul class="s7-rules-list">
+          <li>Teams must have at least 4 members for 4v4 ladders.</li>
+          <li>Sniper ladder is solo only.</li>
+          <li>Seasonal ladders reset every season.</li>
+          <li>Boosting XP or ELO is strictly prohibited.</li>
+        </ul>
+      </div>
+
+      <!-- PENALTIES -->
+      <div class="s7-card">
+        <h3 class="s7-panel-title">Penalties</h3>
+
+        <ul class="s7-rules-list">
+          <li>Match reversals</li>
+          <li>XP/ELO deductions</li>
+          <li>Temporary suspensions</li>
+          <li>Permanent bans for repeated offenses</li>
+        </ul>
+      </div>
+
     </section>
+
+    <!-- RIGHT SIDEBAR -->
+    <aside class="s7-right">
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Rule Info</h3>
+        <p>Rules apply to all ladders and match types.</p>
+        <p>Admins may update rules at any time.</p>
+      </section>
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Tips</h3>
+        <p>Record your matches for proof.</p>
+        <p>Communicate clearly with opponents.</p>
+      </section>
+
+    </aside>
+
   </main>
 
-  <footer>
-    <p>Sector 7 &copy; 2026</p>
-  </footer>
+  <!-- NOTIFICATION -->
+  <div id="notification"></div>
 
+  <!-- MAIN JS -->
   <script src="assets/app.js"></script>
+
 </body>
 </html>
