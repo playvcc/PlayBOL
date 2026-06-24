@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sector 7 | Disputes</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="s7-header">
+    <div class="s7-header-inner">
+
+      <div class="s7-logo-block">
+        <div class="s7-logo-mark">S7</div>
+        <div class="s7-logo-text">
+          <span class="s7-logo-title">SECTOR 7</span>
+          <span class="s7-logo-sub">Black Ops II Competitive Network</span>
+        </div>
+      </div>
+
+      <nav class="s7-nav">
+        <a href="index.html">Home</a>
+        <a href="teams.html">Teams</a>
+        <a href="players.html">Players</a>
+        <a href="matches.html">Matches</a>
+        <a href="rankings.html">Rankings</a>
+        <a href="sniper.html">Sniper</a>
+        <a href="seasonal.html">Seasonal</a>
+        <a href="ladders.html">Ladders</a>
+        <a href="disputes.html">Disputes</a>
+      </nav>
+
+      <div class="s7-auth-block">
+        <button id="login-btn" class="s7-btn s7-btn-ghost">Login</button>
+        <button id="logout-btn" class="s7-btn s7-btn-accent" style="display:none;">Logout</button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MAIN LAYOUT -->
+  <main class="s7-main">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="s7-sidebar">
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Community</h3>
+        <a href="#">News</a>
+        <a href="#">Events</a>
+        <a href="#">Forums</a>
+        <a href="#">Discord</a>
+        <a href="#">Media</a>
+        <a href="#">Hall of Fame</a>
+        <a href="#">Rules</a>
+      </section>
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Competitive</h3>
+        <a href="ladders.html">Ladders</a>
+        <a href="rankings.html">XP Rankings</a>
+        <a href="matches.html">Matches</a>
+        <a href="disputes.html">Disputes</a>
+        <a href="#">Support</a>
+      </section>
+
+      <button class="s7-cta">Join Sector 7 – Build Your Legacy</button>
+
+    </aside>
+
+    <!-- CENTER CONTENT -->
+    <section class="s7-content">
+
+      <!-- SUBMIT DISPUTE -->
+      <div class="s7-card">
+        <h2>Submit a Dispute</h2>
+
+        <label>Match ID</label>
+        <input id="dispute-match-id" class="s7-input" placeholder="Enter match ID" />
+
+        <label>Reason</label>
+        <textarea id="dispute-reason" class="s7-input" placeholder="Explain the issue"></textarea>
+
+        <button id="submit-dispute-btn" class="s7-btn s7-btn-accent" style="margin-top:10px;">
+          Submit Dispute
+        </button>
+      </div>
+
+      <!-- PENDING DISPUTES -->
+      <div class="s7-card">
+        <h2>Pending Disputes</h2>
+        <div id="pending-disputes"></div>
+      </div>
+
+    </section>
+
+    <!-- RIGHT SIDEBAR -->
+    <aside class="s7-right">
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Dispute Info</h3>
+        <p>Use this page to report incorrect match results.</p>
+        <p>Admins review disputes manually.</p>
+      </section>
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Tips</h3>
+        <p>Provide clear evidence.</p>
+        <p>False disputes may result in penalties.</p>
+      </section>
+
+    </aside>
+
+  </main>
+
+  <!-- NOTIFICATION -->
+  <div id="notification"></div>
+
+  <!-- MAIN JS -->
+  <script src="assets/app.js"></script>
+
+  <script>
+    async function submitDispute() {
+      const matchId = document.getElementById("dispute-match-id").value;
+      const reason = document.getElementById("dispute-reason").value;
+
+      const { data } = await supabase.auth.getUser();
+      if (!data.user) return notify("You must be logged in");
+
+      await supabase.from("disputes").insert({
+        match_id: matchId,
+        reason,
+        user_id: data.user.id,
+        status: "pending"
+      });
+
+      notify("Dispute submitted");
+      loadPendingDisputes();
+    }
+
+    if (document.getElementById("submit-dispute-btn")) {
+      document.getElementById("submit-dispute-btn").onclick = submitDispute;
+    }
+
+    async function loadPendingDisputes() {
+      const container = document.getElementById("pending-disputes");
+      if (!container) return;
+
+      const { data: disputes } = await supabase
+        .from("disputes")
+        .select("*")
+        .eq("status", "pending");
+
+      if (!disputes || disputes.length === 0) {
+        container.innerHTML = "<p>No pending disputes.</p>";
+        return;
+      }
+
+      container.innerHTML = disputes
+        .map(
+          d => `
+          <div class="pending-match-card">
+            <strong>Match #${d.match_id}</strong>
+            <p>${d.reason}</p>
+            <div class="actions">
+              <button onclick="resolveDispute(${d.id}, 'approved')">Approve</button>
+              <button onclick="resolveDispute(${d.id}, 'rejected')">Reject</button>
+            </div>
+          </div>
+        `
+        )
+        .join("");
+    }
+
+    async function resolveDispute(id, status) {
+      await supabase.from("disputes").update({ status }).eq("id", id);
+      notify("Dispute " + status);
+      loadPendingDisputes();
+    }
+
+    loadPendingDisputes();
+  </script>
+
+</body>
+</html>
