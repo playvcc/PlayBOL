@@ -4,31 +4,46 @@
   <meta charset="UTF-8">
   <title>Recruitment – Sector 7</title>
   <link rel="stylesheet" href="assets/style.css">
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </head>
 <body data-page="recruitment">
-  <!-- NAVBAR -->
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="ladders.html">Ladders</a></li>
+      <li><a href="tournaments.html">Tournaments</a></li>
+      <li><a href="teams.html">Teams</a></li>
+      <li><a href="players.html">Players</a></li>
+      <li><a href="divisions.html">Divisions</a></li>
+      <li><a href="matches.html">Matches</a></li>
+      <li><a href="rankings.html">Rankings</a></li>
+      <li><a href="recruitment.html">Recruitment</a></li>
+      <li><a href="store.html">Store</a></li>
+      <li><a href="rules.html">Rules</a></li>
+      <li><a href="support.html">Support</a></li>
+      <li><a href="hall-of-fame.html">Hall of Fame</a></li>
+      <li><a href="admin.html">Admin</a></li>
+    </ul>
+  </nav>
 
   <header class="sub-hero">
     <h1>Recruitment</h1>
-    <p>Join Sector 7 and find your squad.</p>
+    <p>Apply to join Sector 7.</p>
   </header>
 
   <main>
     <section>
-      <h2>Apply to Join</h2>
       <form id="recruitment-form">
         <label>Gamertag
           <input type="text" name="gamertag" required>
         </label>
         <label>Preferred Division
           <select name="division">
-            <option value="casual">Casual</option>
-            <option value="competitive">Competitive</option>
+            <option value="Casual">Casual</option>
+            <option value="Competitive">Competitive</option>
           </select>
         </label>
-        <label>Primary Role
+        <label>Role
           <input type="text" name="role">
         </label>
         <label>Why do you want to join?
@@ -40,8 +55,10 @@
     </section>
   </main>
 
-  <footer><p>Sector 7 &copy; 2026</p></footer>
+  <footer>
+    <p>Sector 7 &copy; 2026</p>
+  </footer>
+
   <script src="assets/app.js"></script>
 </body>
 </html>
-
