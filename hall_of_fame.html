@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sector 7 | Hall of Fame</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="s7-header">
+    <div class="s7-header-inner">
+
+      <div class="s7-logo-block">
+        <div class="s7-logo-mark">S7</div>
+        <div class="s7-logo-text">
+          <span class="s7-logo-title">SECTOR 7</span>
+          <span class="s7-logo-sub">Black Ops II Competitive Network</span>
+        </div>
+      </div>
+
+      <nav class="s7-nav">
+        <a href="index.html">Home</a>
+        <a href="teams.html">Teams</a>
+        <a href="players.html">Players</a>
+        <a href="matches.html">Matches</a>
+        <a href="rankings.html">Rankings</a>
+        <a href="sniper.html">Sniper</a>
+        <a href="seasonal.html">Seasonal</a>
+        <a href="ladders.html">Ladders</a>
+        <a href="disputes.html">Disputes</a>
+        <a href="support.html">Support</a>
+        <a href="rules.html">Rules</a>
+        <a href="news.html">News</a>
+        <a href="events.html">Events</a>
+        <a href="forums.html">Forums</a>
+        <a href="media.html">Media</a>
+        <a href="hall_of_fame.html">Hall of Fame</a>
+      </nav>
+
+      <div class="s7-auth-block">
+        <button id="login-btn" class="s7-btn s7-btn-ghost">Login</button>
+        <button id="logout-btn" class="s7-btn s7-btn-accent" style="display:none;">Logout</button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MAIN LAYOUT -->
+  <main class="s7-main">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="s7-sidebar">
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Community</h3>
+        <a href="news.html">News</a>
+        <a href="events.html">Events</a>
+        <a href="forums.html">Forums</a>
+        <a href="media.html">Media</a>
+        <a href="hall_of_fame.html">Hall of Fame</a>
+        <a href="rules.html">Rules</a>
+      </section>
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Competitive</h3>
+        <a href="ladders.html">Ladders</a>
+        <a href="rankings.html">XP Rankings</a>
+        <a href="matches.html">Matches</a>
+        <a href="disputes.html">Disputes</a>
+        <a href="support.html">Support</a>
+      </section>
+
+      <button class="s7-cta">Join Sector 7 – Build Your Legacy</button>
+
+    </aside>
+
+    <!-- CENTER CONTENT -->
+    <section class="s7-content">
+
+      <div class="s7-card">
+        <h2>Sector 7 Hall of Fame</h2>
+        <p style="color:var(--s7-text-muted); margin-bottom:10px;">
+          Celebrating the greatest players, teams, and achievements in Sector 7 history.
+        </p>
+      </div>
+
+      <!-- TOP PLAYERS -->
+      <div class="s7-card">
+        <h3 class="s7-panel-title">Legendary Players</h3>
+        <div id="hof-players"></div>
+      </div>
+
+      <!-- TOP TEAMS -->
+      <div class="s7-card">
+        <h3 class="s7-panel-title">Legendary Teams</h3>
+        <div id="hof-teams"></div>
+      </div>
+
+      <!-- ACHIEVEMENTS -->
+      <div class="s7-card">
+        <h3 class="s7-panel-title">Historic Achievements</h3>
+        <div id="hof-achievements"></div>
+      </div>
+
+    </section>
+
+    <!-- RIGHT SIDEBAR -->
+    <aside class="s7-right">
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Hall of Fame Info</h3>
+        <p>Players and teams are added based on performance and milestones.</p>
+        <p>Updated at the end of each season.</p>
+      </section>
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Tips</h3>
+        <p>Climb the ladders to earn your place.</p>
+        <p>Seasonal champions are automatically featured.</p>
+      </section>
+
+    </aside>
+
+  </main>
+
+  <!-- NOTIFICATION -->
+  <div id="notification"></div>
+
+  <!-- MAIN JS -->
+  <script src="assets/app.js"></script>
+
+  <script>
+    async function loadHallOfFame() {
+      // Load legendary players
+      const playersContainer = document.getElementById("hof-players");
+      const { data: players } = await supabase
+        .from("hall_of_fame_players")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      playersContainer.innerHTML =
+        players && players.length
+          ? players
+              .map(
+                p => `
+          <div class="leaderboard-card">
+            <strong>${p.username}</strong>
+            <p>${p.description}</p>
+          </div>
+        `
+              )
+              .join("")
+          : "<p>No legendary players yet.</p>";
+
+      // Load legendary teams
+      const teamsContainer = document.getElementById("hof-teams");
+      const { data: teams } = await supabase
+        .from("hall_of_fame_teams")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      teamsContainer.innerHTML =
+        teams && teams.length
+          ? teams
+              .map(
+                t => `
+          <div class="leaderboard-card">
+            <strong>${t.team_name}</strong>
+            <p>${t.description}</p>
+          </div>
+        `
+              )
+              .join("")
+          : "<p>No legendary teams yet.</p>";
+
+      // Load achievements
+      const achievementsContainer = document.getElementById("hof-achievements");
+      const { data: achievements } = await supabase
+        .from("hall_of_fame_achievements")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      achievementsContainer.innerHTML =
+        achievements && achievements.length
+          ? achievements
+              .map(
+                a => `
+          <div class="leaderboard-card">
+            <strong>${a.title}</strong>
+            <p>${a.description}</p>
+          </div>
+        `
+              )
+              .join("")
+          : "<p>No achievements recorded yet.</p>";
+    }
+
+    loadHallOfFame();
+  </script>
+
+</body>
+</html>
