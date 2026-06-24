@@ -4,29 +4,45 @@
   <meta charset="UTF-8">
   <title>Support – Sector 7</title>
   <link rel="stylesheet" href="assets/style.css">
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </head>
 <body data-page="support">
-  <!-- NAVBAR -->
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="ladders.html">Ladders</a></li>
+      <li><a href="tournaments.html">Tournaments</a></li>
+      <li><a href="teams.html">Teams</a></li>
+      <li><a href="players.html">Players</a></li>
+      <li><a href="divisions.html">Divisions</a></li>
+      <li><a href="matches.html">Matches</a></li>
+      <li><a href="rankings.html">Rankings</a></li>
+      <li><a href="recruitment.html">Recruitment</a></li>
+      <li><a href="store.html">Store</a></li>
+      <li><a href="rules.html">Rules</a></li>
+      <li><a href="support.html">Support</a></li>
+      <li><a href="hall-of-fame.html">Hall of Fame</a></li>
+      <li><a href="admin.html">Admin</a></li>
+    </ul>
+  </nav>
 
   <header class="sub-hero">
     <h1>Support</h1>
-    <p>Match disputes, technical issues, and account help.</p>
+    <p>Get help with your account or matches.</p>
   </header>
 
   <main>
     <section>
-      <h2>Submit a Ticket</h2>
       <form id="support-form">
         <label>Email
           <input type="email" name="email" required>
         </label>
         <label>Category
           <select name="category">
-            <option value="dispute">Match Dispute</option>
-            <option value="technical">Technical Issue</option>
-            <option value="account">Account Issue</option>
+            <option value="Account">Account</option>
+            <option value="Matches">Matches</option>
+            <option value="Teams">Teams</option>
+            <option value="Other">Other</option>
           </select>
         </label>
         <label>Details
@@ -38,8 +54,10 @@
     </section>
   </main>
 
-  <footer><p>Sector 7 &copy; 2026</p></footer>
+  <footer>
+    <p>Sector 7 &copy; 2026</p>
+  </footer>
+
   <script src="assets/app.js"></script>
 </body>
 </html>
-
