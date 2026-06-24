@@ -1,56 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Ladders – Sector 7</title>
-  <link rel="stylesheet" href="assets/style.css">
+  <meta charset="UTF-8" />
+  <title>Sector 7 | Ladders</title>
+  <link rel="stylesheet" href="assets/style.css" />
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </head>
-<body data-page="ladders">
-  <nav>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="ladders.html">Ladders</a></li>
-      <li><a href="tournaments.html">Tournaments</a></li>
-      <li><a href="teams.html">Teams</a></li>
-      <li><a href="players.html">Players</a></li>
-      <li><a href="divisions.html">Divisions</a></li>
-      <li><a href="matches.html">Matches</a></li>
-      <li><a href="rankings.html">Rankings</a></li>
-      <li><a href="recruitment.html">Recruitment</a></li>
-      <li><a href="store.html">Store</a></li>
-      <li><a href="rules.html">Rules</a></li>
-      <li><a href="support.html">Support</a></li>
-      <li><a href="hall-of-fame.html">Hall of Fame</a></li>
-      <li><a href="admin.html">Admin</a></li>
-    </ul>
-  </nav>
 
-  <header class="sub-hero">
-    <h1>Ladders</h1>
-    <p>Ranked ladders for competitive play.</p>
+<body>
+
+  <!-- HEADER -->
+  <header class="s7-header">
+    <div class="s7-header-inner">
+
+      <div class="s7-logo-block">
+        <div class="s7-logo-mark">S7</div>
+        <div class="s7-logo-text">
+          <span class="s7-logo-title">SECTOR 7</span>
+          <span class="s7-logo-sub">Black Ops II Competitive Network</span>
+        </div>
+      </div>
+
+      <nav class="s7-nav">
+        <a href="index.html">Home</a>
+        <a href="teams.html">Teams</a>
+        <a href="players.html">Players</a>
+        <a href="matches.html">Matches</a>
+        <a href="rankings.html">Rankings</a>
+        <a href="sniper.html">Sniper</a>
+        <a href="seasonal.html">Seasonal</a>
+        <a href="ladders.html">Ladders</a>
+      </nav>
+
+      <div class="s7-auth-block">
+        <button id="login-btn" class="s7-btn s7-btn-ghost">Login</button>
+        <button id="logout-btn" class="s7-btn s7-btn-accent" style="display:none;">Logout</button>
+      </div>
+
+    </div>
   </header>
 
-  <main>
-    <section>
-      <table class="table" id="ladders-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Mode</th>
-            <th>Team Size</th>
-            <th>Season</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+  <!-- MAIN LAYOUT -->
+  <main class="s7-main">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="s7-sidebar">
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Community</h3>
+        <a href="#">News</a>
+        <a href="#">Events</a>
+        <a href="#">Forums</a>
+        <a href="#">Discord</a>
+        <a href="#">Media</a>
+        <a href="#">Hall of Fame</a>
+        <a href="#">Rules</a>
+      </section>
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Competitive</h3>
+        <a href="#">Ladders</a>
+        <a href="#">XP Rankings</a>
+        <a href="#">Matches</a>
+        <a href="#">Disputes</a>
+        <a href="#">Support</a>
+      </section>
+
+      <button class="s7-cta">Join Sector 7 – Build Your Legacy</button>
+
+    </aside>
+
+    <!-- CENTER CONTENT -->
+    <section class="s7-content">
+
+      <div class="s7-card">
+        <h2>Sector 7 Ladders</h2>
+        <p style="color:var(--s7-text-muted); margin-bottom:10px;">
+          Choose a ladder to compete in. Rankings update automatically after matches.
+        </p>
+      </div>
+
+      <!-- LADDER LIST -->
+      <div class="s7-card">
+        <h3 class="s7-panel-title">Available Ladders</h3>
+
+        <div class="leaderboard-card">
+          <strong>4v4 MLG Ladder</strong>
+          <p>Competitive team‑based ladder using official BO2 MLG rules.</p>
+          <a href="rankings.html" class="s7-btn s7-btn-accent">View Ladder</a>
+        </div>
+
+        <div class="leaderboard-card">
+          <strong>Sniper 1v1 Ladder</strong>
+          <p>Solo sniper ladder. ELO‑based ranking system.</p>
+          <a href="sniper.html" class="s7-btn s7-btn-accent">View Ladder</a>
+        </div>
+
+        <div class="leaderboard-card">
+          <strong>Seasonal Competitive Ladder</strong>
+          <p>Season‑based competitive ELO ladder. Resets every season.</p>
+          <a href="seasonal.html" class="s7-btn s7-btn-accent">View Ladder</a>
+        </div>
+
+        <div class="leaderboard-card">
+          <strong>Seasonal Casual XP Ladder</strong>
+          <p>XP‑based ladder for casual matches. Resets every season.</p>
+          <a href="seasonal.html" class="s7-btn s7-btn-accent">View Ladder</a>
+        </div>
+
+        <div class="leaderboard-card">
+          <strong>Global XP Ladder</strong>
+          <p>Tracks total XP earned across all match types.</p>
+          <a href="rankings.html" class="s7-btn s7-btn-accent">View Ladder</a>
+        </div>
+
+      </div>
+
     </section>
+
+    <!-- RIGHT SIDEBAR -->
+    <aside class="s7-right">
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Ladder Info</h3>
+        <p>Rankings update instantly after match approvals.</p>
+        <p>Seasonal ladders reset every season.</p>
+        <p>Competitive ladders use ELO.</p>
+        <p>Casual ladders use XP.</p>
+      </section>
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Tips</h3>
+        <p>Play consistently to climb faster.</p>
+        <p>Sniper ladder is solo only.</p>
+        <p>4v4 ladder requires a registered team.</p>
+      </section>
+
+    </aside>
+
   </main>
 
-  <footer>
-    <p>Sector 7 &copy; 2026</p>
-  </footer>
+  <!-- NOTIFICATION -->
+  <div id="notification"></div>
 
+  <!-- MAIN JS -->
   <script src="assets/app.js"></script>
+
 </body>
 </html>
