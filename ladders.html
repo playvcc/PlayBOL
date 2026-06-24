@@ -4,21 +4,35 @@
   <meta charset="UTF-8">
   <title>Ladders – Sector 7</title>
   <link rel="stylesheet" href="assets/style.css">
-<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </head>
 <body data-page="ladders">
-  <!-- NAVBAR (same as index.html) -->
-  <!-- copy the same <nav> block from index.html here -->
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="ladders.html">Ladders</a></li>
+      <li><a href="tournaments.html">Tournaments</a></li>
+      <li><a href="teams.html">Teams</a></li>
+      <li><a href="players.html">Players</a></li>
+      <li><a href="divisions.html">Divisions</a></li>
+      <li><a href="matches.html">Matches</a></li>
+      <li><a href="rankings.html">Rankings</a></li>
+      <li><a href="recruitment.html">Recruitment</a></li>
+      <li><a href="store.html">Store</a></li>
+      <li><a href="rules.html">Rules</a></li>
+      <li><a href="support.html">Support</a></li>
+      <li><a href="hall-of-fame.html">Hall of Fame</a></li>
+      <li><a href="admin.html">Admin</a></li>
+    </ul>
+  </nav>
 
   <header class="sub-hero">
     <h1>Ladders</h1>
-    <p>Ranked BO2 ladders for 4v4 and 5v5.</p>
+    <p>Ranked ladders for competitive play.</p>
   </header>
 
   <main>
     <section>
-      <h2>Active Ladders</h2>
       <table class="table" id="ladders-table">
         <thead>
           <tr>
@@ -28,9 +42,7 @@
             <th>Season</th>
           </tr>
         </thead>
-        <tbody>
-          <!-- Filled by app.js from Supabase -->
-        </tbody>
+        <tbody></tbody>
       </table>
     </section>
   </main>
