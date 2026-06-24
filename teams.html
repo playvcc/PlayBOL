@@ -15,21 +15,22 @@
 
   <main>
     <section>
-      <h2>All Teams</h2>
-      <table class="table" id="teams-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Division</th>
-            <th>XP</th>
-            <th>Record</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Filled by app.js -->
-        </tbody>
-      </table>
-    </section>
+  <h2>Create a Team</h2>
+  <form id="create-team-form">
+    <label>Team Name
+      <input type="text" name="team_name" required>
+    </label>
+
+    <label>Division
+      <select name="division_id" id="division-select"></select>
+    </label>
+
+    <button type="submit">Submit Team</button>
+  </form>
+
+  <p id="team-create-message"></p>
+</section>
+
   </main>
 
   <footer><p>Sector 7 &copy; 2026</p></footer>
