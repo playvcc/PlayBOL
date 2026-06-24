@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sector 7 | Events</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="s7-header">
+    <div class="s7-header-inner">
+
+      <div class="s7-logo-block">
+        <div class="s7-logo-mark">S7</div>
+        <div class="s7-logo-text">
+          <span class="s7-logo-title">SECTOR 7</span>
+          <span class="s7-logo-sub">Black Ops II Competitive Network</span>
+        </div>
+      </div>
+
+      <nav class="s7-nav">
+        <a href="index.html">Home</a>
+        <a href="teams.html">Teams</a>
+        <a href="players.html">Players</a>
+        <a href="matches.html">Matches</a>
+        <a href="rankings.html">Rankings</a>
+        <a href="sniper.html">Sniper</a>
+        <a href="seasonal.html">Seasonal</a>
+        <a href="ladders.html">Ladders</a>
+        <a href="disputes.html">Disputes</a>
+        <a href="support.html">Support</a>
+        <a href="rules.html">Rules</a>
+        <a href="news.html">News</a>
+        <a href="events.html">Events</a>
+      </nav>
+
+      <div class="s7-auth-block">
+        <button id="login-btn" class="s7-btn s7-btn-ghost">Login</button>
+        <button id="logout-btn" class="s7-btn s7-btn-accent" style="display:none;">Logout</button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MAIN LAYOUT -->
+  <main class="s7-main">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="s7-sidebar">
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Community</h3>
+        <a href="news.html">News</a>
+        <a href="events.html">Events</a>
+        <a href="#">Forums</a>
+        <a href="#">Discord</a>
+        <a href="#">Media</a>
+        <a href="#">Hall of Fame</a>
+        <a href="rules.html">Rules</a>
+      </section>
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Competitive</h3>
+        <a href="ladders.html">Ladders</a>
+        <a href="rankings.html">XP Rankings</a>
+        <a href="matches.html">Matches</a>
+        <a href="disputes.html">Disputes</a>
+        <a href="support.html">Support</a>
+      </section>
+
+      <button class="s7-cta">Join Sector 7 – Build Your Legacy</button>
+
+    </aside>
+
+    <!-- CENTER CONTENT -->
+    <section class="s7-content">
+
+      <div class="s7-card">
+        <h2>Sector 7 Events</h2>
+        <p style="color:var(--s7-text-muted); margin-bottom:10px;">
+          Stay updated with upcoming tournaments, clan wars, and community events.
+        </p>
+      </div>
+
+      <!-- EVENTS FEED -->
+      <div class="s7-card">
+        <h3 class="s7-panel-title">Upcoming Events</h3>
+        <div id="events-feed"></div>
+      </div>
+
+      <!-- PAST EVENTS -->
+      <div class="s7-card">
+        <h3 class="s7-panel-title">Past Events</h3>
+        <div id="events-past"></div>
+      </div>
+
+    </section>
+
+    <!-- RIGHT SIDEBAR -->
+    <aside class="s7-right">
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Event Info</h3>
+        <p>Events are hosted by Sector 7 staff.</p>
+        <p>Some events offer XP or ELO rewards.</p>
+      </section>
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Tips</h3>
+        <p>Register early to secure your spot.</p>
+        <p>Follow Discord for instant announcements.</p>
+      </section>
+
+    </aside>
+
+  </main>
+
+  <!-- NOTIFICATION -->
+  <div id="notification"></div>
+
+  <!-- MAIN JS -->
+  <script src="assets/app.js"></script>
+
+  <script>
+    async function loadEvents() {
+      const upcomingContainer = document.getElementById("events-feed");
+      const pastContainer = document.getElementById("events-past");
+
+      const { data: events } = await supabase
+        .from("events")
+        .select("*")
+        .order("date", { ascending: true });
+
+      if (!events || events.length === 0) {
+        upcomingContainer.innerHTML = "<p>No events scheduled.</p>";
+        pastContainer.innerHTML = "<p>No past events.</p>";
+        return;
+      }
+
+      const now = new Date();
+
+      const upcoming = events.filter(e => new Date(e.date) >= now);
+      const past = events.filter(e => new Date(e.date) < now);
+
+      upcomingContainer.innerHTML =
+        upcoming.length === 0
+          ? "<p>No upcoming events.</p>"
+          : upcoming
+              .map(
+                e => `
+          <div class="leaderboard-card">
+            <strong>${e.title}</strong>
+            <p style="color:var(--s7-text-muted); font-size:12px;">
+              ${new Date(e.date).toLocaleDateString()}
+            </p>
+            <p>${e.description}</p>
+          </div>
+        `
+              )
+              .join("");
+
+      pastContainer.innerHTML =
+        past.length === 0
+          ? "<p>No past events.</p>"
+          : past
+              .map(
+                e => `
+          <div class="leaderboard-card">
+            <strong>${e.title}</strong>
+            <p style="color:var(--s7-text-muted); font-size:12px;">
+              ${new Date(e.date).toLocaleDateString()}
+            </p>
+            <p>${e.description}</p>
+          </div>
+        `
+              )
+              .join("");
+    }
+
+    loadEvents();
+  </script>
+
+</body>
+</html>
