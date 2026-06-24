@@ -60,3 +60,67 @@ if (logoutBtn) logoutBtn.onclick = logoutUser;
 supabase.auth.onAuthStateChange(() => {
   updateAuthButtons();
 });
+// ===============================
+// LOGIN FUNCTION
+// ===============================
+async function loginUser() {
+  const email = document.getElementById("login-email")?.value;
+  const password = document.getElementById("login-password")?.value;
+
+  if (!email || !password) {
+    notify("Please enter email and password.");
+    return;
+  }
+
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: email,
+    password: password
+  });
+
+  if (error) {
+    notify(error.message);
+    return;
+  }
+
+  notify("Logged in successfully!");
+  window.location.href = "index.html";
+}
+
+const loginSubmit = document.getElementById("login-submit");
+if (loginSubmit) loginSubmit.onclick = loginUser;
+
+
+// ===============================
+// SIGNUP FUNCTION
+// ===============================
+async function signupUser() {
+  const username = document.getElementById("signup-username")?.value;
+  const email = document.getElementById("signup-email")?.value;
+  const password = document.getElementById("signup-password")?.value;
+
+  if (!username || !email || !password) {
+    notify("Please fill out all fields.");
+    return;
+  }
+
+  const { data, error } = await supabase.auth.signUp({
+    email: email,
+    password: password,
+    options: {
+      data: {
+        username: username
+      }
+    }
+  });
+
+  if (error) {
+    notify(error.message);
+    return;
+  }
+
+  notify("Account created! You can now log in.");
+  window.location.href = "login.html";
+}
+
+const signupSubmit = document.getElementById("signup-submit");
+if (signupSubmit) signupSubmit.onclick = signupUser;
