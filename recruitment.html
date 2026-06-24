@@ -1,1 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Recruitment – Sector 7</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="recruitment">
+  <!-- NAVBAR -->
+
+  <header class="sub-hero">
+    <h1>Recruitment</h1>
+    <p>Join Sector 7 and find your squad.</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>Apply to Join</h2>
+      <form id="recruitment-form">
+        <label>Gamertag
+          <input type="text" name="gamertag" required>
+        </label>
+        <label>Preferred Division
+          <select name="division">
+            <option value="casual">Casual</option>
+            <option value="competitive">Competitive</option>
+          </select>
+        </label>
+        <label>Primary Role
+          <input type="text" name="role">
+        </label>
+        <label>Why do you want to join?
+          <textarea name="reason" rows="4"></textarea>
+        </label>
+        <button type="submit">Submit Application</button>
+      </form>
+      <p id="recruitment-message"></p>
+    </section>
+  </main>
+
+  <footer><p>Sector 7 &copy; 2026</p></footer>
+  <script src="assets/app.js"></script>
+</body>
+</html>
 
