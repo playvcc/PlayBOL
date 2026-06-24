@@ -1,1 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin – Sector 7</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="admin">
+  <!-- NAVBAR -->
+
+  <header class="sub-hero">
+    <h1>Admin Panel</h1>
+    <p>Manage teams, matches, and seasons.</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>Admin Login</h2>
+      <form id="admin-login-form">
+        <label>Email
+          <input type="email" name="email" required>
+        </label>
+        <label>Password
+          <input type="password" name="password" required>
+        </label>
+        <button type="submit">Log In</button>
+      </form>
+      <p id="admin-login-message"></p>
+    </section>
+
+    <section id="admin-dashboard" style="display:none;">
+      <h2>Dashboard</h2>
+      <button id="refresh-data">Refresh Data</button>
+      <p>Future: approve matches, edit XP, manage seasons.</p>
+    </section>
+  </main>
+
+  <footer><p>Sector 7 &copy; 2026</p></footer>
+  <script src="assets/app.js"></script>
+</body>
+</html>
 
