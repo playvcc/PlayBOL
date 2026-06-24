@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Sector 7 | Home</title>
-  <link rel="stylesheet" href="assets/style.css" />
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <link rel="stylesheet" href="assets/style.css">
+  <script defer src="assets/app.js"></script>
 </head>
 
 <body>
@@ -13,14 +13,12 @@
   <header class="s7-header">
     <div class="s7-header-inner">
 
-      <div class="s7-logo-block">
-        <div class="s7-logo-mark">S7</div>
-        <div class="s7-logo-text">
-          <span class="s7-logo-title">SECTOR 7</span>
-          <span class="s7-logo-sub">Black Ops II Competitive Network</span>
-        </div>
-      </div>
+      <!-- LOGO -->
+      <a href="index.html" class="s7-logo-link">
+        <img src="assets/logos/sector7-logo.png" class="s7-logo-img" alt="Sector 7 Logo">
+      </a>
 
+      <!-- NAVIGATION -->
       <nav class="s7-nav">
         <a href="index.html">Home</a>
         <a href="teams.html">Teams</a>
@@ -29,8 +27,12 @@
         <a href="rankings.html">Rankings</a>
         <a href="sniper.html">Sniper</a>
         <a href="seasonal.html">Seasonal</a>
+        <a href="ladders.html">Ladders</a>
+        <a href="disputes.html">Disputes</a>
+        <a href="support.html">Support</a>
       </nav>
 
+      <!-- AUTH -->
       <div class="s7-auth-block">
         <button id="login-btn" class="s7-btn s7-btn-ghost">Login</button>
         <button id="logout-btn" class="s7-btn s7-btn-accent" style="display:none;">Logout</button>
@@ -39,41 +41,40 @@
     </div>
   </header>
 
-  <!-- MAIN LAYOUT -->
+  <!-- MAIN GRID -->
   <main class="s7-main">
 
     <!-- LEFT SIDEBAR -->
     <aside class="s7-sidebar">
 
-      <section class="s7-panel">
-        <h3 class="s7-panel-title">Community</h3>
-        <a href="#">News</a>
-        <a href="#">Events</a>
-        <a href="#">Forums</a>
-        <a href="#">Discord</a>
-        <a href="#">Media</a>
-        <a href="#">Hall of Fame</a>
-        <a href="#">Rules</a>
-      </section>
+      <div class="s7-panel">
+        <div class="s7-panel-title">Community</div>
+        <a href="news.html">News</a>
+        <a href="events.html">Events</a>
+        <a href="forums.html">Forums</a>
+        <a href="discord.html">Discord</a>
+        <a href="media.html">Media</a>
+        <a href="hall_of_fame.html">Hall of Fame</a>
+        <a href="rules.html">Rules</a>
+        <button class="s7-cta">Join Sector 7</button>
+      </div>
 
-      <section class="s7-panel">
-        <h3 class="s7-panel-title">Competitive</h3>
-        <a href="#">Ladders</a>
-        <a href="#">XP Rankings</a>
-        <a href="#">Matches</a>
-        <a href="#">Disputes</a>
-        <a href="#">Support</a>
-      </section>
-
-      <button class="s7-cta">Join Sector 7 – Build Your Legacy</button>
+      <div class="s7-panel">
+        <div class="s7-panel-title">Competitive</div>
+        <a href="ladders.html">Ladders</a>
+        <a href="rankings.html">XP Rankings</a>
+        <a href="matches.html">Matches</a>
+        <a href="disputes.html">Disputes</a>
+        <a href="support.html">Support</a>
+      </div>
 
     </aside>
 
     <!-- CENTER CONTENT -->
     <section class="s7-content">
 
-      <!-- HERO BANNER -->
-      <section class="s7-hero">
+      <!-- HERO -->
+      <div class="s7-hero">
         <div class="s7-hero-overlay">
           <h1>Welcome to Sector 7</h1>
           <p>The ultimate Black Ops II competitive network.</p>
@@ -83,23 +84,23 @@
             <span>Legacy</span>
           </div>
         </div>
-      </section>
+      </div>
 
-      <!-- TOP TEAMS (EMPTY UNTIL DATA EXISTS) -->
+      <!-- TOP TEAMS -->
       <div class="s7-card">
-        <h3 class="s7-panel-title">Top Teams (4v4 MLG)</h3>
+        <div class="s7-panel-title">Top Teams (4v4 MLG)</div>
         <div id="top-teams"></div>
       </div>
 
-      <!-- LIVE MATCHES (EMPTY UNTIL DATA EXISTS) -->
+      <!-- LIVE MATCHES -->
       <div class="s7-card">
-        <h3 class="s7-panel-title">Live Matches</h3>
+        <div class="s7-panel-title">Live Matches</div>
         <div id="live-matches"></div>
       </div>
 
-      <!-- TOP PLAYERS (EMPTY UNTIL DATA EXISTS) -->
+      <!-- TOP PLAYERS -->
       <div class="s7-card">
-        <h3 class="s7-panel-title">Top Players (XP)</h3>
+        <div class="s7-panel-title">Top Players (XP)</div>
         <div id="top-players"></div>
       </div>
 
@@ -108,29 +109,24 @@
     <!-- RIGHT SIDEBAR -->
     <aside class="s7-right">
 
-      <section class="s7-panel">
-        <h3 class="s7-panel-title">BO2 MLG Map Pool</h3>
+      <div class="s7-panel">
+        <div class="s7-panel-title">BO2 MLG Map Pool</div>
         <p><strong>Hardpoint:</strong> Raid, Standoff, Slums, Yemen, Express</p>
         <p><strong>S&D:</strong> Raid, Standoff, Express, Slums, Meltdown</p>
         <p><strong>CTF:</strong> Raid, Standoff, Slums</p>
-      </section>
+      </div>
 
-      <section class="s7-panel">
-        <h3 class="s7-panel-title">News & Updates</h3>
-        <p>Season 3 is Live!</p>
-        <p>Playoffs Begin Next Week</p>
-        <p>New Map Rotation</p>
-      </section>
+      <div class="s7-panel">
+        <div class="s7-panel-title">News & Updates</div>
+        <div id="news-list"></div>
+      </div>
 
     </aside>
 
   </main>
 
-  <!-- NOTIFICATION TOAST -->
+  <!-- NOTIFICATION -->
   <div id="notification"></div>
-
-  <!-- MAIN JS -->
-  <script src="assets/app.js"></script>
 
 </body>
 </html>
