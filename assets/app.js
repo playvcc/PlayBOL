@@ -360,6 +360,53 @@ function initAdmin() {
     }
   });
 
+async function loadDivisionsIntoSelect() {
+  const { data } = await supabase.from("divisions").select("*");
+  const select = document.getElementById("division-select");
+  if (!select || !data) return;
+
+  select.innerHTML = "";
+  data.forEach(d => {
+    const opt = document.createElement("option");
+    opt.value = d.id;
+    opt.textContent = d.name;
+    select.appendChild(opt);
+  });
+}
+
+async function initTeamCreation() {
+  const form = document.getElementById("create-team-form");
+  const msg = document.getElementById("team-create-message");
+
+  if (!form) return;
+
+  await loadDivisionsIntoSelect();
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+
+    const payload = {
+      captain_id: (await supabase.auth.getUser()).data.user.id,
+      team_name: formData.get("team_name"),
+      division_id: formData.get("division_id")
+    };
+
+    const { error } = await supabase
+      .from("team_creation_requests")
+      .insert(payload);
+
+    msg.textContent = error
+      ? "Error submitting team request."
+      : "Team submitted for approval.";
+
+    if (!error) form.reset();
+  });
+}
+
+
+  
   if (refreshBtn) {
     refreshBtn.addEventListener("click", () => {
       alert("Future: refresh admin data.");
