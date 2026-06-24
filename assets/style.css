@@ -1,100 +1,219 @@
-/* GLOBAL RESET */
+/* RESET */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #000;
-    color: #fff;
-    line-height: 1.6;
+  font-family: Arial, sans-serif;
+  background-color: #000;
+  color: #fff;
+  line-height: 1.6;
 }
 
 /* NAVBAR */
 nav {
-    width: 100%;
-    background: #111;
-    padding: 15px 0;
-    border-bottom: 2px solid #ff6600;
+  width: 100%;
+  background: #111;
+  padding: 15px 0;
+  border-bottom: 2px solid #ff6600;
 }
 
 nav ul {
-    display: flex;
-    justify-content: center;
-    list-style: none;
-    gap: 25px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style: none;
+  gap: 20px;
 }
 
 nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-    transition: 0.3s;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: 0.3s;
 }
 
 nav ul li a:hover {
-    color: #ff6600;
+  color: #ff6600;
 }
 
-/* HERO BANNER */
+/* HERO */
 .hero {
-    width: 100%;
-    height: 450px;
-    background: url("assets/img/hero-bo2.jpg") no-repeat center center/cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    border-bottom: 3px solid #ff6600;
+  width: 100%;
+  height: 420px;
+  background: url("assets/img/hero-bo2.jpg") no-repeat center center/cover;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-overlay {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 30px 40px;
+  text-align: center;
+  border: 2px solid #ff6600;
+  box-shadow: 0 0 25px #000;
+}
+
+.hero-logo {
+  width: 180px;
+  margin-bottom: 15px;
 }
 
 .hero h1 {
-    font-size: 48px;
-    text-shadow: 0 0 15px #000;
+  font-size: 42px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 0 0 15px #000;
 }
 
 .hero p {
-    font-size: 20px;
-    margin-top: 10px;
-    text-shadow: 0 0 10px #000;
+  font-size: 18px;
+  margin-top: 8px;
+  color: #ffb366;
 }
 
-/* LOGO */
-.logo {
-    width: 220px;
-    margin: 20px auto;
-    display: block;
+/* SUB HERO */
+.sub-hero {
+  padding: 40px 20px;
+  text-align: center;
+  border-bottom: 2px solid #ff6600;
+  background: #050505;
 }
 
-.logo img {
-    width: 100%;
-    height: auto;
+.sub-hero h1 {
+  font-size: 32px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
-/* CONTENT SECTIONS */
+.sub-hero p {
+  margin-top: 8px;
+  color: #ccc;
+}
+
+/* MAIN CONTENT */
+main {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
 section {
-    padding: 40px 20px;
-    max-width: 1100px;
-    margin: auto;
+  margin-bottom: 35px;
 }
 
 section h2 {
-    font-size: 32px;
-    margin-bottom: 15px;
-    color: #ff6600;
+  font-size: 26px;
+  margin-bottom: 12px;
+  color: #ff6600;
+  text-transform: uppercase;
 }
 
 section p, section li {
-    font-size: 18px;
+  font-size: 16px;
+}
+
+/* TABLES */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.table th,
+.table td {
+  border: 1px solid #333;
+  padding: 8px 10px;
+  text-align: left;
+}
+
+.table th {
+  background: #111;
+  color: #ffb366;
+}
+
+.table tr:nth-child(even) {
+  background: #111;
+}
+
+/* FORMS */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 500px;
+}
+
+form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  text-align: left;
+}
+
+input, select, textarea {
+  margin-top: 4px;
+  padding: 8px;
+  border: 1px solid #444;
+  background: #111;
+  color: #fff;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  background: #ff6600;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #ff8533;
+}
+
+/* LISTS */
+ul {
+  list-style: disc;
+  margin-left: 20px;
 }
 
 /* FOOTER */
 footer {
-    text-align: center;
+  text-align: center;
+  padding: 20px;
+  background: #111;
+  border-top: 2px solid #ff6600;
+  margin-top: 40px;
+  font-size: 14px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .hero {
+    height: 360px;
+  }
+
+  .hero-overlay {
+    width: 90%;
     padding: 20px;
-    background: #111;
-    border-top: 2px solid #ff6600;
-    margin-top: 40px;
+  }
+
+  nav ul {
+    gap: 10px;
+  }
+
+  nav ul li a {
+    font-size: 12px;
+  }
 }
