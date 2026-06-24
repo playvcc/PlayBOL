@@ -2,213 +2,104 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Sector 7 – BO2 Competitive Network</title>
+  <title>Sector 7 – The Ultimate Black Ops 2 Competitive Network</title>
   <link rel="stylesheet" href="assets/style.css">
 </head>
-<body>
-  <header class="s7-header">
-    <div class="s7-header-top">
-      <div class="s7-logo">
-        <span class="s7-logo-main">SECTOR 7</span>
-        <span class="s7-logo-sub">The Ultimate Black Ops 2 Competitive Network</span>
-      </div>
-      <nav class="s7-nav">
-        <a href="index.html" class="active">Home</a>
-        <a href="ladders.html">Ladders</a>
-        <a href="tournaments.html">Tournaments</a>
-        <a href="teams.html">Teams</a>
-        <a href="players.html">Players</a>
-        <a href="divisions.html">Divisions</a>
-        <a href="matches.html">Matches</a>
-        <a href="rankings.html">Rankings</a>
-        <a href="recruitment.html">Recruitment</a>
-        <a href="store.html">Store</a>
-        <a href="rules.html">Rules</a>
-        <a href="support.html">Support</a>
-        <a href="admin.html">Admin</a>
-      </nav>
-    </div>
+<body data-page="home">
+  <!-- NAVBAR -->
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="ladders.html">Ladders</a></li>
+      <li><a href="tournaments.html">Tournaments</a></li>
+      <li><a href="teams.html">Teams</a></li>
+      <li><a href="players.html">Players</a></li>
+      <li><a href="divisions.html">Divisions</a></li>
+      <li><a href="matches.html">Matches</a></li>
+      <li><a href="rankings.html">Rankings</a></li>
+      <li><a href="recruitment.html">Recruitment</a></li>
+      <li><a href="store.html">Store</a></li>
+      <li><a href="rules.html">Rules</a></li>
+      <li><a href="support.html">Support</a></li>
+      <li><a href="hall-of-fame.html">Hall of Fame</a></li>
+      <li><a href="admin.html">Admin</a></li>
+    </ul>
+  </nav>
 
-    <div class="s7-hero">
-      <div class="s7-hero-overlay"></div>
-      <div class="s7-hero-content">
-        <h1>SECTOR 7</h1>
-        <p>BO2-era clan ecosystem with Casual & Competitive divisions, ranked teams, and seasonal progression.</p>
-        <div class="s7-hero-buttons">
-          <a href="recruitment.html" class="btn-primary">Join Sector 7</a>
-          <a href="ladders.html" class="btn-secondary">View XP Ladders</a>
-        </div>
-      </div>
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-overlay">
+      <img src="assets/img/logo-sector7.png" alt="Sector 7 Logo" class="hero-logo">
+      <h1>Sector 7</h1>
+      <p>The Ultimate Black Ops 2 Competitive Network</p>
     </div>
   </header>
 
-  <main class="s7-main">
-    <section class="s7-layout">
-      <!-- LEFT COLUMN: Community / Competitive / Ranks -->
-      <div class="s7-column s7-column-left">
-        <div class="card">
-          <h2>Community Overview</h2>
-          <p>Sector 7 is a structured BO2 clan network with two core divisions:</p>
-          <ul>
-            <li><strong>Casual Division:</strong> Open lobbies, zombies/custom games, fun nights, LFG, no pressure. </li>
-            <li><strong>Competitive Division:</strong> Ranked teams, 4v4/5v5, BO1 regular season, BO3 playoffs. </li>
-          </ul>
-        </div>
+  <!-- MAIN CONTENT -->
+  <main>
+    <section id="community-overview">
+      <h2>Community Overview</h2>
+      <p>Sector 7 is a structured BO2 clan network with two core divisions:</p>
+      <ul>
+        <li><strong>Casual Division:</strong> Open lobbies, zombies/custom games, fun nights, LFG, no pressure.</li>
+        <li><strong>Competitive Division:</strong> Ranked teams, 4v4/5v5, BO1 regular season, BO3 playoffs.</li>
+      </ul>
+    </section>
 
-        <div class="card">
-          <h2>Community Ranks</h2>
-          <ul class="s7-rank-list">
-            <li><span>Recruit</span><span>0–499 XP</span></li>
-            <li><span>Member</span><span>500–1,499 XP</span></li>
-            <li><span>Competitor</span><span>1,500–4,999 XP</span></li>
-            <li><span>Elite</span><span>5,000–9,999 XP</span></li>
-            <li><span>Officer</span><span>10,000–24,999 XP</span></li>
-            <li><span>Captain</span><span>25,000–49,999 XP</span></li>
-          </ul>
-          <p class="s7-note">Progression is based on activity, performance, and team contribution—no favoritism. </p>
-        </div>
+    <section id="community-ranks">
+      <h2>Community Ranks</h2>
+      <ul>
+        <li><strong>Recruit:</strong> 0–499 XP</li>
+        <li><strong>Member:</strong> 500–1,499 XP</li>
+        <li><strong>Competitor:</strong> 1,500–4,999 XP</li>
+        <li><strong>Elite:</strong> 5,000–9,999 XP</li>
+        <li><strong>Officer:</strong> 10,000–24,999 XP</li>
+        <li><strong>Captain:</strong> 25,000–49,999 XP</li>
+      </ul>
+      <p>Progression is based on activity, performance, and team contribution—no favoritism.</p>
+    </section>
 
-        <div class="card">
-          <h2>Season System</h2>
-          <p>Each season lasts 6–8 weeks:</p>
-          <ul>
-            <li>Weeks 1–6: Ranked ladder matches</li>
-            <li>Week 7: Qualification phase</li>
-            <li>Week 8: Playoffs & Finals</li>
-          </ul>
-          <p>Ranks reset each season, legacy rewards remain permanent. </p>
-        </div>
-      </div>
+    <section id="season-system">
+      <h2>Season System</h2>
+      <p>Each season lasts 6–8 weeks:</p>
+      <ul>
+        <li>Weeks 1–6: Ranked ladder matches</li>
+        <li>Week 7: Qualification phase</li>
+        <li>Week 8: Playoffs & Finals</li>
+      </ul>
+    </section>
 
-      <!-- CENTER COLUMN: Top Teams, Live Matches, Map Pool -->
-      <div class="s7-column s7-column-center">
-        <div class="card">
-          <h2>Top Teams – 4v4 MLG</h2>
-          <ol class="s7-list-table">
-            <li><span>Oblivion</span><span>23,450 XP</span></li>
-            <li><span>Retro Ops</span><span>21,870 XP</span></li>
-            <li><span>Phoenix</span><span>19,320 XP</span></li>
-            <li><span>Velocity</span><span>17,650 XP</span></li>
-            <li><span>Nemesis</span><span>16,210 XP</span></li>
-          </ol>
-        </div>
+    <section id="top-teams">
+      <h2>Top Teams – 4v4 MLG</h2>
+      <ul id="top-teams-list">
+        <!-- Filled by app.js from Supabase -->
+      </ul>
+    </section>
 
-        <div class="card">
-          <h2>Live Matches</h2>
-          <ul class="s7-live-matches">
-            <li>
-              <div>
-                <strong>Retro Ops vs Oblivion</strong>
-                <span>Hardpoint: Raid</span>
-              </div>
-              <span class="badge-live">LIVE</span>
-            </li>
-            <li>
-              <div>
-                <strong>Phoenix vs Velocity</strong>
-                <span>BO5 – S&amp;D: Standoff</span>
-              </div>
-              <span class="badge-live">LIVE</span>
-            </li>
-            <li>
-              <div>
-                <strong>Nemesis vs Elevate</strong>
-                <span>BO5 – CTF: Slums</span>
-              </div>
-              <span class="badge-live">LIVE</span>
-            </li>
-          </ul>
-        </div>
+    <section id="live-matches">
+      <h2>Live Matches</h2>
+      <ul id="live-matches-list">
+        <!-- Filled by app.js -->
+      </ul>
+    </section>
 
-        <div class="card">
-          <h2>BO2 MLG Map Pool</h2>
-          <div class="s7-map-pool">
-            <div>
-              <h3>Hardpoint</h3>
-              <ul>
-                <li>Raid</li>
-                <li>Standoff</li>
-                <li>Slums</li>
-                <li>Yemen</li>
-                <li>Express</li>
-              </ul>
-            </div>
-            <div>
-              <h3>Search &amp; Destroy</h3>
-              <ul>
-                <li>Raid</li>
-                <li>Standoff</li>
-                <li>Express</li>
-                <li>Slums</li>
-                <li>Meltdown</li>
-              </ul>
-            </div>
-            <div>
-              <h3>Capture the Flag</h3>
-              <ul>
-                <li>Raid</li>
-                <li>Standoff</li>
-                <li>Slums</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
+    <section id="top-players">
+      <h2>Top Players – XP</h2>
+      <ul id="top-players-list">
+        <!-- Filled by app.js -->
+      </ul>
+    </section>
 
-      <!-- RIGHT COLUMN: News, Top Players, Legacy -->
-      <div class="s7-column s7-column-right">
-        <div class="card">
-          <h2>News &amp; Updates</h2>
-          <ul class="s7-news-list">
-            <li>
-              <strong>Season 3 is live!</strong>
-              <span>New ladders, rewards, and more.</span>
-              <span class="s7-news-date">May 25, 2025</span>
-            </li>
-            <li>
-              <strong>Playoffs begin next week</strong>
-              <span>Top teams will battle for glory.</span>
-              <span class="s7-news-date">May 24, 2025</span>
-            </li>
-            <li>
-              <strong>New map rotation</strong>
-              <span>Updated BO2 MLG map pool.</span>
-              <span class="s7-news-date">May 22, 2025</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h2>Top Players – XP</h2>
-          <ol class="s7-list-table">
-            <li><span>TroZii</span><span>28,450 XP</span></li>
-            <li><span>XGN_King</span><span>24,870 XP</span></li>
-            <li><span>vSurge</span><span>20,420 XP</span></li>
-            <li><span>RetroJayy</span><span>18,540 XP</span></li>
-            <li><span>zDelirium</span><span>16,780 XP</span></li>
-          </ol>
-        </div>
-
-        <div class="card">
-          <h2>Legacy System</h2>
-          <p>Long-term members earn:</p>
-          <ul>
-            <li>Hall of Fame entries</li>
-            <li>Profile badges</li>
-            <li>Exclusive events</li>
-            <li>Priority team placement</li>
-          </ul>
-          <p class="s7-note">Build your legacy. Earn your elite. </p>
-        </div>
-      </div>
+    <section id="legacy-system">
+      <h2>Legacy System</h2>
+      <p>Long-term members earn Hall of Fame entries and permanent recognition for their impact on Sector 7.</p>
     </section>
   </main>
 
-  <footer class="s7-footer">
-    <p>&copy; 2026 Sector 7 – Elite Competitive Network</p>
+  <footer>
+    <p>Sector 7 &copy; 2026 – Compete. Rise. Dominate.</p>
   </footer>
 
   <script src="assets/app.js"></script>
 </body>
 </html>
-
