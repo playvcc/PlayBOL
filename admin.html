@@ -4,9 +4,27 @@
   <meta charset="UTF-8">
   <title>Admin – Sector 7</title>
   <link rel="stylesheet" href="assets/style.css">
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </head>
 <body data-page="admin">
-  <!-- NAVBAR -->
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="ladders.html">Ladders</a></li>
+      <li><a href="tournaments.html">Tournaments</a></li>
+      <li><a href="teams.html">Teams</a></li>
+      <li><a href="players.html">Players</a></li>
+      <li><a href="divisions.html">Divisions</a></li>
+      <li><a href="matches.html">Matches</a></li>
+      <li><a href="rankings.html">Rankings</a></li>
+      <li><a href="recruitment.html">Recruitment</a></li>
+      <li><a href="store.html">Store</a></li>
+      <li><a href="rules.html">Rules</a></li>
+      <li><a href="support.html">Support</a></li>
+      <li><a href="hall-of-fame.html">Hall of Fame</a></li>
+      <li><a href="admin.html">Admin</a></li>
+    </ul>
+  </nav>
 
   <header class="sub-hero">
     <h1>Admin Panel</h1>
@@ -31,12 +49,20 @@
     <section id="admin-dashboard" style="display:none;">
       <h2>Dashboard</h2>
       <button id="refresh-data">Refresh Data</button>
-      <p>Future: approve matches, edit XP, manage seasons.</p>
+
+      <section id="pending-teams">
+        <h3>Pending Team Requests</h3>
+        <ul id="pending-team-list">
+          <!-- Filled by app.js -->
+        </ul>
+      </section>
     </section>
   </main>
 
-  <footer><p>Sector 7 &copy; 2026</p></footer>
+  <footer>
+    <p>Sector 7 &copy; 2026</p>
+  </footer>
+
   <script src="assets/app.js"></script>
 </body>
 </html>
-
