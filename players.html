@@ -1,56 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Players – Sector 7</title>
-  <link rel="stylesheet" href="assets/style.css">
+  <meta charset="UTF-8" />
+  <title>Sector 7 | Players</title>
+  <link rel="stylesheet" href="assets/style.css" />
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 </head>
-<body data-page="players">
-  <nav>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="ladders.html">Ladders</a></li>
-      <li><a href="tournaments.html">Tournaments</a></li>
-      <li><a href="teams.html">Teams</a></li>
-      <li><a href="players.html">Players</a></li>
-      <li><a href="divisions.html">Divisions</a></li>
-      <li><a href="matches.html">Matches</a></li>
-      <li><a href="rankings.html">Rankings</a></li>
-      <li><a href="recruitment.html">Recruitment</a></li>
-      <li><a href="store.html">Store</a></li>
-      <li><a href="rules.html">Rules</a></li>
-      <li><a href="support.html">Support</a></li>
-      <li><a href="hall-of-fame.html">Hall of Fame</a></li>
-      <li><a href="admin.html">Admin</a></li>
-    </ul>
-  </nav>
 
-  <header class="sub-hero">
-    <h1>Players</h1>
-    <p>Individual competitors and their stats.</p>
+<body>
+
+  <!-- HEADER -->
+  <header class="s7-header">
+    <div class="s7-header-inner">
+
+      <div class="s7-logo-block">
+        <div class="s7-logo-mark">S7</div>
+        <div class="s7-logo-text">
+          <span class="s7-logo-title">SECTOR 7</span>
+          <span class="s7-logo-sub">Black Ops II Competitive Network</span>
+        </div>
+      </div>
+
+      <nav class="s7-nav">
+        <a href="index.html">Home</a>
+        <a href="teams.html">Teams</a>
+        <a href="players.html">Players</a>
+        <a href="matches.html">Matches</a>
+        <a href="rankings.html">Rankings</a>
+        <a href="sniper.html">Sniper</a>
+        <a href="seasonal.html">Seasonal</a>
+      </nav>
+
+      <div class="s7-auth-block">
+        <button id="login-btn" class="s7-btn s7-btn-ghost">Login</button>
+        <button id="logout-btn" class="s7-btn s7-btn-accent" style="display:none;">Logout</button>
+      </div>
+
+    </div>
   </header>
 
-  <main>
-    <section>
-      <table class="table" id="players-table">
-        <thead>
-          <tr>
-            <th>Gamertag</th>
-            <th>Team</th>
-            <th>XP</th>
-            <th>Rank</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+  <!-- MAIN LAYOUT -->
+  <main class="s7-main">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="s7-sidebar">
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Community</h3>
+        <a href="#">News</a>
+        <a href="#">Events</a>
+        <a href="#">Forums</a>
+        <a href="#">Discord</a>
+        <a href="#">Media</a>
+        <a href="#">Hall of Fame</a>
+        <a href="#">Rules</a>
+      </section>
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Competitive</h3>
+        <a href="#">Ladders</a>
+        <a href="#">XP Rankings</a>
+        <a href="#">Matches</a>
+        <a href="#">Disputes</a>
+        <a href="#">Support</a>
+      </section>
+
+      <button class="s7-cta">Join Sector 7 – Build Your Legacy</button>
+
+    </aside>
+
+    <!-- CENTER CONTENT -->
+    <section class="s7-content">
+
+      <div class="s7-card">
+        <h2>Players</h2>
+        <p style="color:var(--s7-text-muted); margin-bottom:10px;">
+          Browse all registered Sector 7 competitors.
+        </p>
+
+        <div id="players-list"></div>
+      </div>
+
     </section>
-  </main>
 
-  <footer>
-    <p>Sector 7 &copy; 2026</p>
-  </footer>
+    <!-- RIGHT SIDEBAR -->
+    <aside class="s7-right">
 
-  <script src="assets/app.js"></script>
-</body>
-</html>
+      <section class="s7-panel">
