@@ -1,1 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Support – Sector 7</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="support">
+  <!-- NAVBAR -->
+
+  <header class="sub-hero">
+    <h1>Support</h1>
+    <p>Match disputes, technical issues, and account help.</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>Submit a Ticket</h2>
+      <form id="support-form">
+        <label>Email
+          <input type="email" name="email" required>
+        </label>
+        <label>Category
+          <select name="category">
+            <option value="dispute">Match Dispute</option>
+            <option value="technical">Technical Issue</option>
+            <option value="account">Account Issue</option>
+          </select>
+        </label>
+        <label>Details
+          <textarea name="details" rows="4"></textarea>
+        </label>
+        <button type="submit">Submit Ticket</button>
+      </form>
+      <p id="support-message"></p>
+    </section>
+  </main>
+
+  <footer><p>Sector 7 &copy; 2026</p></footer>
+  <script src="assets/app.js"></script>
+</body>
+</html>
 
