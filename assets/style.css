@@ -8,7 +8,6 @@
   --text-muted: #a0a4b3;
   --border-soft: #262a36;
   --danger: #ff3b3b;
-  --success: #3bdc7b;
   --font-main: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
@@ -90,7 +89,7 @@ body {
 .s7-hero {
   position: relative;
   height: 260px;
-  background: url("../assets/img/hero-bo2.jpg") center/cover no-repeat;
+  background: url("img/hero-bo2.jpg") center/cover no-repeat;
   display: flex;
   align-items: center;
   padding: 0 40px;
@@ -259,6 +258,28 @@ body {
   color: var(--text-main);
 }
 
+/* Tables */
+
+.s7-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.s7-table th,
+.s7-table td {
+  padding: 6px 8px;
+  border-bottom: 1px solid #1f2230;
+  text-align: left;
+}
+
+.s7-table th {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
 /* Live matches */
 
 .s7-live-matches {
@@ -343,6 +364,43 @@ body {
   font-style: italic;
 }
 
+/* Forms */
+
+.form-row {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-row label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.form-row input,
+.form-row select,
+.form-row textarea {
+  background: #101218;
+  border: 1px solid #262a36;
+  border-radius: 3px;
+  padding: 6px 8px;
+  color: var(--text-main);
+  font-size: 13px;
+}
+
+/* Ordered list */
+
+.s7-ordered {
+  padding-left: 18px;
+}
+
+.s7-ordered li {
+  margin-bottom: 4px;
+}
+
 /* FOOTER */
 
 .s7-footer {
@@ -385,4 +443,3 @@ body {
     grid-template-columns: 1fr;
   }
 }
-
