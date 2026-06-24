@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sector 7 | Sniper</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="s7-header">
+    <div class="s7-header-inner">
+
+      <div class="s7-logo-block">
+        <div class="s7-logo-mark">S7</div>
+        <div class="s7-logo-text">
+          <span class="s7-logo-title">SECTOR 7</span>
+          <span class="s7-logo-sub">Black Ops II Competitive Network</span>
+        </div>
+      </div>
+
+      <nav class="s7-nav">
+        <a href="index.html">Home</a>
+        <a href="teams.html">Teams</a>
+        <a href="players.html">Players</a>
+        <a href="matches.html">Matches</a>
+        <a href="rankings.html">Rankings</a>
+        <a href="sniper.html">Sniper</a>
+        <a href="seasonal.html">Seasonal</a>
+      </nav>
+
+      <div class="s7-auth-block">
+        <button id="login-btn" class="s7-btn s7-btn-ghost">Login</button>
+        <button id="logout-btn" class="s7-btn s7-btn-accent" style="display:none;">Logout</button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MAIN LAYOUT -->
+  <main class="s7-main">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="s7-sidebar">
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Community</h3>
+        <a href="#">News</a>
+        <a href="#">Events</a>
+        <a href="#">Forums</a>
+        <a href="#">Discord</a>
+        <a href="#">Media</a>
+        <a href="#">Hall of Fame</a>
+        <a href="#">Rules</a>
+      </section>
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Competitive</h3>
+        <a href="#">Ladders</a>
+        <a href="#">XP Rankings</a>
+        <a href="#">Matches</a>
+        <a href="#">Disputes</a>
+        <a href="#">Support</a>
+      </section>
+
+      <button class="s7-cta">Join Sector 7 – Build Your Legacy</button>
+
+    </aside>
+
+    <!-- CENTER CONTENT -->
+    <section class="s7-content">
+
+      <!-- SNIPER MATCH REPORTING -->
+      <div class="s7-card">
+        <h2>Report Sniper Match</h2>
+
+        <label>Opponent Username</label>
+        <input id="sniper-opponent" class="s7-input" placeholder="Enter opponent username" />
+
+        <label>Result</label>
+        <select id="sniper-result" class="s7-input">
+          <option value="win">I Won</option>
+          <option value="loss">I Lost</option>
+        </select>
+
+        <button id="submit-sniper-btn" class="s7-btn s7-btn-accent" style="margin-top:10px;">
+          Submit Sniper Match
+        </button>
+      </div>
+
+      <!-- SNIPER LEADERBOARD -->
+      <div class="s7-card">
+        <h2>Sniper Leaderboard</h2>
+        <div id="sniper-leaderboard"></div>
+      </div>
+
+      <!-- PENDING SNIPER MATCHES -->
+      <div class="s7-card">
+        <h2>Pending Sniper Approvals</h2>
+        <div id="pending-sniper-matches"></div>
+      </div>
+
+    </section>
+
+    <!-- RIGHT SIDEBAR -->
+    <aside class="s7-right">
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Sniper Info</h3>
+        <p>Sniper matches affect Sniper ELO only.</p>
+        <p>Seasonal sniper ELO resets every season.</p>
+      </section>
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Tips</h3>
+        <p>Play consistently to climb the sniper ladder.</p>
+        <p>Both players must confirm the match.</p>
+      </section>
+
+    </aside>
+
+  </main>
+
+  <!-- NOTIFICATION -->
+  <div id="notification"></div>
+
+  <!-- MAIN JS -->
+  <script src="assets/app.js"></script>
+
+</body>
+</html>
