@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Sector 7 | Register</title>
-  <link rel="stylesheet" href="assets/style.css" />
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <link rel="stylesheet" href="assets/style.css">
+  <script defer src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script defer src="assets/app.js"></script>
 </head>
 
 <body>
@@ -13,40 +14,51 @@
   <header class="s7-header">
     <div class="s7-header-inner">
 
-      <div class="s7-logo-block">
-        <div class="s7-logo-mark">S7</div>
-        <div class="s7-logo-text">
-          <span class="s7-logo-title">SECTOR 7</span>
-          <span class="s7-logo-sub">Black Ops II Competitive Network</span>
-        </div>
-      </div>
+      <!-- LOGO -->
+      <a href="index.html" class="s7-logo-link">
+        <img src="assets/logos/sector7-logo.png" class="s7-logo-img" alt="Sector 7 Logo">
+      </a>
 
+      <!-- NAV -->
       <nav class="s7-nav">
         <a href="index.html">Home</a>
-        <a href="login.html">Login</a>
-        <a href="register.html">Register</a>
+        <a href="teams.html">Teams</a>
+        <a href="players.html">Players</a>
+        <a href="matches.html">Matches</a>
+        <a href="rankings.html">Rankings</a>
+        <a href="sniper.html">Sniper</a>
+        <a href="seasonal.html">Seasonal</a>
+        <a href="ladders.html">Ladders</a>
+        <a href="disputes.html">Disputes</a>
+        <a href="support.html">Support</a>
       </nav>
+
+      <!-- AUTH -->
+      <div class="s7-auth-block">
+        <button id="login-btn" class="s7-btn s7-btn-accent">Login</button>
+        <button id="logout-btn" class="s7-btn s7-btn-ghost" style="display:none;">Logout</button>
+      </div>
 
     </div>
   </header>
 
   <!-- MAIN -->
-  <main class="s7-main auth-center">
+  <main class="s7-main" style="display:flex; justify-content:center;">
 
-    <div class="auth-card">
-      <h2>Create Account</h2>
-
-      <label>Email</label>
-      <input id="reg-email" class="s7-input" placeholder="Enter email" />
-
-      <label>Password</label>
-      <input id="reg-password" type="password" class="s7-input" placeholder="Enter password" />
+    <div class="s7-card" style="max-width:420px; width:100%; margin-top:40px;">
+      <h2 style="margin-top:0; text-transform:uppercase; letter-spacing:0.12em;">Create Account</h2>
 
       <label>Username</label>
-      <input id="reg-username" class="s7-input" placeholder="Choose a username" />
+      <input id="signup-username" class="s7-input" placeholder="Choose a username">
 
-      <button id="register-btn" class="s7-btn s7-btn-accent" style="margin-top:10px;">
-        Register
+      <label>Email</label>
+      <input id="signup-email" class="s7-input" placeholder="Enter email">
+
+      <label>Password</label>
+      <input id="signup-password" type="password" class="s7-input" placeholder="Enter password">
+
+      <button id="signup-submit" class="s7-btn s7-btn-accent" style="margin-top:15px; width:100%;">
+        Create Account
       </button>
 
       <p style="margin-top:15px; text-align:center;">
@@ -59,39 +71,6 @@
 
   <!-- NOTIFICATION -->
   <div id="notification"></div>
-
-  <script src="assets/app.js"></script>
-
-  <script>
-    async function registerUser() {
-      const email = document.getElementById("reg-email").value;
-      const password = document.getElementById("reg-password").value;
-      const username = document.getElementById("reg-username").value;
-
-      // Create auth user
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password
-      });
-
-      if (error) return notify(error.message);
-
-      // Create profile row
-      await supabase.from("sector7_users").insert({
-        id: data.user.id,
-        username,
-        xp: 0,
-        rank: "Rookie",
-        wins: 0,
-        losses: 0
-      });
-
-      notify("Account created");
-      window.location.href = "profile.html";
-    }
-
-    document.getElementById("register-btn").onclick = registerUser;
-  </script>
 
 </body>
 </html>
