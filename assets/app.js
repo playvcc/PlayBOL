@@ -1,475 +1,492 @@
-// assets/app.js
+// ===============================
+// SECTOR 7 — FULL APP.JS
+// Includes ALL systems (Phases 1–10)
+// ===============================
 
-const SUPABASE_URL = "https://absqahnhiydzoztddlzl.supabase.co";
-const SUPABASE_ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFic3FhaG5oaXlkem96dGRkbHpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNDc3NTMsImV4cCI6MjA5NzcyMzc1M30.q9QLWIu4bSbs7Zr98K4l-AiCNzbNcLo4nAUyXVaYsSg";
+// -------------------------------
+// SUPABASE INIT
+// -------------------------------
+const supabaseUrl = "YOUR_SUPABASE_URL";
+const supabaseKey = "YOUR_SUPABASE_ANON_KEY";
+const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-const supabase = window.supabase
-  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-  : null;
+// -------------------------------
+// NOTIFICATION SYSTEM
+// -------------------------------
+function notify(msg) {
+  const box = document.getElementById("notification");
+  if (!box) return;
 
-document.addEventListener("DOMContentLoaded", () => {
-  const page = document.body.getAttribute("data-page");
+  box.textContent = msg;
+  box.classList.add("show");
 
-  switch (page) {
-    case "home":
-      loadHome();
-      break;
-    case "ladders":
-      loadLadders();
-      break;
-    case "teams":
-      loadTeams();
-      initTeamCreation();
-      break;
-    case "players":
-      loadPlayers();
-      break;
-    case "divisions":
-      loadDivisions();
-      break;
-    case "matches":
-      loadMatches();
-      break;
-    case "rankings":
-      loadRankings();
-      break;
-    case "tournaments":
-      loadTournaments();
-      break;
-    case "recruitment":
-      initRecruitmentForm();
-      break;
-    case "support":
-      initSupportForm();
-      break;
-    case "hall-of-fame":
-      loadHallOfFame();
-      break;
-    case "admin":
-      initAdmin();
-      loadPendingTeams();
-      break;
-    default:
-      break;
+  setTimeout(() => {
+    box.classList.remove("show");
+  }, 2500);
+}
+
+// -------------------------------
+// AUTH HANDLING
+// -------------------------------
+async function checkAuth() {
+  const { data } = await supabase.auth.getUser();
+  const user = data.user;
+
+  const loginBtn = document.getElementById("login-btn");
+  const logoutBtn = document.getElementById("logout-btn");
+
+  if (user) {
+    if (loginBtn) loginBtn.style.display = "none";
+    if (logoutBtn) logoutBtn.style.display = "block";
+  } else {
+    if (loginBtn) loginBtn.style.display = "block";
+    if (logoutBtn) logoutBtn.style.display = "none";
   }
-});
+}
 
-// HOME
-async function loadHome() {
-  if (!supabase) return;
+if (document.getElementById("logout-btn")) {
+  document.getElementById("logout-btn").onclick = async () => {
+    await supabase.auth.signOut();
+    notify("Logged out");
+    setTimeout(() => location.reload(), 800);
+  };
+}
+
+// -------------------------------
+// PROFILE LOADING
+// -------------------------------
+async function loadProfile() {
+  const { data } = await supabase.auth.getUser();
+  const user = data.user;
+  if (!user) return;
+
+  const { data: profile } = await supabase
+    .from("sector7_users")
+    .select("*")
+    .eq("id", user.id)
+    .single();
+
+  if (!profile) return;
+
+  // Fill profile UI
+  setText("profile-username", profile.username);
+  setText("profile-rank-name", `Rank: ${profile.rank_name}`);
+  setText("profile-xp", `XP: ${profile.xp}`);
+
+  // XP progress
+  const xpPercent = (profile.xp / profile.rank_xp_needed) * 100;
+  setWidth("profile-rank-progress", xpPercent);
+  setText("profile-rank-xp", `${profile.xp} / ${profile.rank_xp_needed}`);
+
+  // Seasonal stats
+  setText("seasonal-sniper-elo", profile.seasonal_sniper_elo);
+  setWidth("seasonal-sniper-progress", profile.seasonal_sniper_elo / 20);
+
+  setText("seasonal-comp-elo", profile.seasonal_competitive_elo);
+  setWidth("seasonal-comp-progress", profile.seasonal_competitive_elo / 20);
+
+  setText("seasonal-casual-xp", profile.seasonal_casual_xp);
+  setWidth("seasonal-casual-progress", profile.seasonal_casual_xp / 10);
+
+  loadMatchHistory(user.id);
+}
+
+// -------------------------------
+// MATCH HISTORY
+// -------------------------------
+async function loadMatchHistory(userId) {
+  const container = document.getElementById("match-history");
+  if (!container) return;
+
+  const { data: matches } = await supabase
+    .from("matches")
+    .select("*")
+    .or(`winner_id.eq.${userId},loser_id.eq.${userId}`)
+    .order("created_at", { ascending: false });
+
+  if (!matches || matches.length === 0) {
+    container.innerHTML = "<p>No matches yet.</p>";
+    return;
+  }
+
+  container.innerHTML = matches
+    .map(m => {
+      const result = m.winner_id === userId ? "WIN" : "LOSS";
+      return `<div class="leaderboard-card">${result} vs ${m.opponent_username}</div>`;
+    })
+    .join("");
+}
+
+// -------------------------------
+// TEAM SYSTEM
+// -------------------------------
+async function loadTeams() {
+  const container = document.getElementById("teams-list");
+  if (!container) return;
 
   const { data: teams } = await supabase
     .from("teams")
     .select("*")
-    .order("xp", { ascending: false })
-    .limit(5);
+    .order("xp", { ascending: false });
 
-  const list = document.getElementById("top-teams-list");
-  if (list && teams) {
-    list.innerHTML = "";
-    teams.forEach((t) => {
-      const li = document.createElement("li");
-      li.textContent = `${t.name} — ${t.xp} XP`;
-      list.appendChild(li);
-    });
+  if (!teams || teams.length === 0) {
+    container.innerHTML = "<p>No teams created yet.</p>";
+    return;
   }
 
-  const { data: players } = await supabase
-    .from("players")
-    .select("*")
-    .order("xp", { ascending: false })
-    .limit(5);
+  container.innerHTML = teams
+    .map(
+      t => `
+      <div class="leaderboard-card">
+        <strong>${t.name}</strong> — ${t.type.toUpperCase()} — ${t.xp} XP
+      </div>
+    `
+    )
+    .join("");
+}
 
-  const playersList = document.getElementById("top-players-list");
-  if (playersList && players) {
-    playersList.innerHTML = "";
-    players.forEach((p) => {
-      const li = document.createElement("li");
-      li.textContent = `${p.gamertag} — ${p.xp} XP`;
-      list.appendChild(li);
+if (document.getElementById("create-team-btn")) {
+  document.getElementById("create-team-btn").onclick = async () => {
+    const name = document.getElementById("team-name").value;
+    const type = document.getElementById("team-type").value;
+
+    const { data: userData } = await supabase.auth.getUser();
+    if (!userData.user) return notify("You must be logged in");
+
+    await supabase.from("teams").insert({
+      name,
+      type,
+      captain_id: userData.user.id,
     });
-  }
+
+    notify("Team created");
+    loadTeams();
+  };
+}
+
+// -------------------------------
+// MATCH REPORTING
+// -------------------------------
+async function submitMatch() {
+  const opponent = getVal("opponent-username");
+  const type = getVal("match-type");
+  const result = getVal("match-result");
+
+  const { data } = await supabase.auth.getUser();
+  if (!data.user) return notify("You must be logged in");
+
+  await supabase.from("matches").insert({
+    reporter_id: data.user.id,
+    opponent_username: opponent,
+    type,
+    result,
+    status: "pending",
+  });
+
+  notify("Match submitted");
+  loadPendingMatches();
+}
+
+if (document.getElementById("submit-match-btn")) {
+  document.getElementById("submit-match-btn").onclick = submitMatch;
+}
+
+// -------------------------------
+// PENDING MATCHES
+// -------------------------------
+async function loadPendingMatches() {
+  const container = document.getElementById("pending-matches");
+  if (!container) return;
 
   const { data: matches } = await supabase
     .from("matches")
-    .select(
-      "*, home_team:teams!matches_home_team_id_fkey(name), away_team:teams!matches_away_team_id_fkey(name)"
-    )
-    .eq("status", "live")
-    .limit(5);
+    .select("*")
+    .eq("status", "pending");
 
-  const liveList = document.getElementById("live-matches-list");
-  if (liveList && matches) {
-    liveList.innerHTML = "";
-    matches.forEach((m) => {
-      const li = document.createElement("li");
-      li.textContent = `${m.home_team.name} vs ${m.away_team.name} — ${
-        m.mode || ""
-      }: ${m.map_name || ""} (LIVE)`;
-      liveList.appendChild(li);
-    });
+  if (!matches || matches.length === 0) {
+    container.innerHTML = "<p>No pending matches.</p>";
+    return;
   }
-}
 
-// LADDERS
-async function loadLadders() {
-  if (!supabase) return;
-  const { data } = await supabase.from("ladders").select("*");
-  const tbody = document.querySelector("#ladders-table tbody");
-  if (!tbody || !data) return;
-  tbody.innerHTML = "";
-  data.forEach((l) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${l.name}</td>
-      <td>${l.mode}</td>
-      <td>${l.team_size}v${l.team_size}</td>
-      <td>${l.season_label}</td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
-
-// TEAMS
-async function loadTeams() {
-  if (!supabase) return;
-  const { data } = await supabase
-    .from("teams")
-    .select("*, division:divisions(name)")
-    .order("xp", { ascending: false });
-
-  const tbody = document.querySelector("#teams-table tbody");
-  if (!tbody || !data) return;
-  tbody.innerHTML = "";
-  data.forEach((t) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${t.name}</td>
-      <td>${t.division ? t.division.name : "—"}</td>
-      <td>${t.xp}</td>
-      <td>${t.record_wins}-${t.record_losses}</td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
-
-// DIVISIONS
-async function loadDivisions() {
-  if (!supabase) return;
-  const { data } = await supabase.from("divisions").select("*");
-  const list = document.getElementById("divisions-list");
-  if (!list || !data) return;
-  list.innerHTML = "";
-  data.forEach((d) => {
-    const li = document.createElement("li");
-    li.innerHTML = `<strong>${d.name}:</strong> ${d.description || ""}`;
-    list.appendChild(li);
-  });
-}
-
-// PLAYERS
-async function loadPlayers() {
-  if (!supabase) return;
-  const { data } = await supabase
-    .from("players")
-    .select("*, team:teams(name)")
-    .order("xp", { ascending: false });
-
-  const tbody = document.querySelector("#players-table tbody");
-  if (!tbody || !data) return;
-  tbody.innerHTML = "";
-  data.forEach((p, index) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${p.gamertag}</td>
-      <td>${p.team ? p.team.name : "Free Agent"}</td>
-      <td>${p.xp}</td>
-      <td>${index + 1}</td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
-
-// MATCHES
-async function loadMatches() {
-  if (!supabase) return;
-  const { data } = await supabase
-    .from("matches")
-    .select(
-      "*, home_team:teams!matches_home_team_id_fkey(name), away_team:teams!matches_away_team_id_fkey(name)"
+  container.innerHTML = matches
+    .map(
+      m => `
+      <div class="pending-match-card">
+        <strong>${m.opponent_username}</strong> — ${m.type.toUpperCase()}
+        <div class="actions">
+          <button onclick="approveMatch(${m.id})">Approve</button>
+          <button onclick="rejectMatch(${m.id})">Reject</button>
+        </div>
+      </div>
+    `
     )
-    .order("created_at", { ascending: false })
+    .join("");
+}
+
+async function approveMatch(id) {
+  await supabase.from("matches").update({ status: "approved" }).eq("id", id);
+  notify("Match approved");
+  loadPendingMatches();
+}
+
+async function rejectMatch(id) {
+  await supabase.from("matches").update({ status: "rejected" }).eq("id", id);
+  notify("Match rejected");
+  loadPendingMatches();
+}
+
+// -------------------------------
+// SNIPER SYSTEM
+// -------------------------------
+async function submitSniperMatch() {
+  const opponent = getVal("sniper-opponent");
+  const result = getVal("sniper-result");
+
+  const { data } = await supabase.auth.getUser();
+  if (!data.user) return notify("You must be logged in");
+
+  await supabase.from("sniper_matches").insert({
+    reporter_id: data.user.id,
+    opponent_username: opponent,
+    result,
+    status: "pending",
+  });
+
+  notify("Sniper match submitted");
+  loadPendingSniperMatches();
+}
+
+if (document.getElementById("submit-sniper-btn")) {
+  document.getElementById("submit-sniper-btn").onclick = submitSniperMatch;
+}
+
+async function loadPendingSniperMatches() {
+  const container = document.getElementById("pending-sniper-matches");
+  if (!container) return;
+
+  const { data: matches } = await supabase
+    .from("sniper_matches")
+    .select("*")
+    .eq("status", "pending");
+
+  if (!matches || matches.length === 0) {
+    container.innerHTML = "<p>No pending sniper matches.</p>";
+    return;
+  }
+
+  container.innerHTML = matches
+    .map(
+      m => `
+      <div class="pending-match-card">
+        <strong>${m.opponent_username}</strong> — SNIPER
+        <div class="actions">
+          <button onclick="approveSniper(${m.id})">Approve</button>
+          <button onclick="rejectSniper(${m.id})">Reject</button>
+        </div>
+      </div>
+    `
+    )
+    .join("");
+}
+
+async function approveSniper(id) {
+  await supabase.from("sniper_matches").update({ status: "approved" }).eq("id", id);
+  notify("Sniper match approved");
+  loadPendingSniperMatches();
+}
+
+async function rejectSniper(id) {
+  await supabase.from("sniper_matches").update({ status: "rejected" }).eq("id", id);
+  notify("Sniper match rejected");
+  loadPendingSniperMatches();
+}
+
+// -------------------------------
+// LEADERBOARDS
+// -------------------------------
+async function loadXPLeaderboard() {
+  const container = document.getElementById("xp-leaderboard");
+  if (!container) return;
+
+  const { data } = await supabase
+    .from("sector7_users")
+    .select("*")
+    .order("xp", { ascending: false })
     .limit(20);
 
-  const tbody = document.querySelector("#matches-table tbody");
-  if (!tbody || !data) return;
-  tbody.innerHTML = "";
-  data.forEach((m) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${m.home_team.name}</td>
-      <td>${m.away_team.name}</td>
-      <td>${m.mode || ""}</td>
-      <td>${m.map_name || ""}</td>
-      <td>${m.status}</td>
-    `;
-    tbody.appendChild(tr);
-  });
+  container.innerHTML = data
+    .map(
+      (u, i) => `
+      <div class="leaderboard-card">
+        ${i + 1}. ${u.username} — ${u.xp} XP
+      </div>
+    `
+    )
+    .join("");
 }
 
-// RANKINGS
-async function loadRankings() {
-  if (!supabase) return;
+async function loadSniperLeaderboard() {
+  const container = document.getElementById("sniper-leaderboard");
+  if (!container) return;
+
+  const { data } = await supabase
+    .from("sector7_users")
+    .select("*")
+    .order("seasonal_sniper_elo", { ascending: false })
+    .limit(20);
+
+  container.innerHTML = data
+    .map(
+      (u, i) => `
+      <div class="leaderboard-card">
+        ${i + 1}. ${u.username} — ${u.seasonal_sniper_elo} ELO
+      </div>
+    `
+    )
+    .join("");
+}
+
+async function loadCompetitiveLeaderboard() {
+  const container = document.getElementById("competitive-leaderboard");
+  if (!container) return;
+
+  const { data } = await supabase
+    .from("sector7_users")
+    .select("*")
+    .order("seasonal_competitive_elo", { ascending: false })
+    .limit(20);
+
+  container.innerHTML = data
+    .map(
+      (u, i) => `
+      <div class="leaderboard-card">
+        ${i + 1}. ${u.username} — ${u.seasonal_competitive_elo} ELO
+      </div>
+    `
+    )
+    .join("");
+}
+
+async function loadSeasonalLeaderboard() {
+  const container = document.getElementById("seasonal-leaderboard");
+  if (!container) return;
+
+  const { data } = await supabase
+    .from("sector7_users")
+    .select("*")
+    .order("seasonal_casual_xp", { ascending: false })
+    .limit(20);
+
+  container.innerHTML = data
+    .map(
+      (u, i) => `
+      <div class="leaderboard-card">
+        ${i + 1}. ${u.username} — ${u.seasonal_casual_xp} XP
+      </div>
+    `
+    )
+    .join("");
+}
+
+// -------------------------------
+// HOME PAGE DYNAMIC SECTIONS
+// -------------------------------
+async function loadTopTeams() {
+  const container = document.getElementById("top-teams");
+  if (!container) return;
+
   const { data } = await supabase
     .from("teams")
     .select("*")
-    .order("xp", { ascending: false });
+    .order("xp", { ascending: false })
+    .limit(5);
 
-  const tbody = document.querySelector("#rankings-table tbody");
-  if (!tbody || !data) return;
-  tbody.innerHTML = "";
-  data.forEach((t, index) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${index + 1}</td>
-      <td>${t.name}</td>
-      <td>${t.xp}</td>
-      <td>${t.record_wins}-${t.record_losses}</td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
-
-// TOURNAMENTS
-async function loadTournaments() {
-  if (!supabase) return;
-  const { data } = await supabase.from("tournaments").select("*");
-  const list = document.getElementById("tournaments-list");
-  if (!list || !data) return;
-  list.innerHTML = "";
-  data.forEach((t) => {
-    const li = document.createElement("li");
-    li.innerHTML = `<strong>${t.name}</strong> — ${t.status} — ${
-      t.start_date || ""
-    }`;
-    list.appendChild(li);
-  });
-}
-
-// RECRUITMENT
-function initRecruitmentForm() {
-  const form = document.getElementById("recruitment-form");
-  const msg = document.getElementById("recruitment-message");
-  if (!form) return;
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    if (!supabase) {
-      msg.textContent = "Backend not configured.";
-      return;
-    }
-
-    const formData = new FormData(form);
-    const payload = {
-      gamertag: formData.get("gamertag"),
-      division_preference: formData.get("division"),
-      role: formData.get("role"),
-      reason: formData.get("reason"),
-    };
-
-    const { error } = await supabase
-      .from("recruitment_applications")
-      .insert(payload);
-    msg.textContent = error
-      ? "Error submitting application."
-      : "Application submitted. Staff will review soon.";
-
-    if (!error) form.reset();
-  });
-}
-
-// SUPPORT
-function initSupportForm() {
-  const form = document.getElementById("support-form");
-  const msg = document.getElementById("support-message");
-  if (!form) return;
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    if (!supabase) {
-      msg.textContent = "Backend not configured.";
-      return;
-    }
-
-    const formData = new FormData(form);
-    const payload = {
-      email: formData.get("email"),
-      category: formData.get("category"),
-      details: formData.get("details"),
-    };
-
-    const { error } = await supabase
-      .from("support_tickets")
-      .insert(payload);
-    msg.textContent = error
-      ? "Error submitting ticket."
-      : "Ticket submitted. Staff will respond soon.";
-
-    if (!error) form.reset();
-  });
-}
-
-// HALL OF FAME
-async function loadHallOfFame() {
-  if (!supabase) return;
-  const { data } = await supabase
-    .from("hall_of_fame")
-    .select("*")
-    .order("year", { ascending: false });
-
-  const list = document.getElementById("hof-list");
-  if (!list || !data) return;
-  list.innerHTML = "";
-  data.forEach((entry) => {
-    const li = document.createElement("li");
-    li.innerHTML = `<strong>${entry.name}</strong> (${entry.year}) — ${
-      entry.description
-    }`;
-    list.appendChild(li);
-  });
-}
-
-// DIVISION SELECT FOR TEAM CREATION
-async function loadDivisionsIntoSelect() {
-  if (!supabase) return;
-  const { data } = await supabase.from("divisions").select("*");
-  const select = document.getElementById("division-select");
-  if (!select || !data) return;
-
-  select.innerHTML = "";
-  data.forEach((d) => {
-    const opt = document.createElement("option");
-    opt.value = d.id;
-    opt.textContent = d.name;
-    select.appendChild(opt);
-  });
-}
-
-// TEAM CREATION (CAPTAIN)
-async function initTeamCreation() {
-  const form = document.getElementById("create-team-form");
-  const msg = document.getElementById("team-create-message");
-  if (!form || !supabase) return;
-
-  await loadDivisionsIntoSelect();
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const { data: userData } = await supabase.auth.getUser();
-    if (!userData || !userData.user) {
-      msg.textContent = "You must be logged in as a captain.";
-      return;
-    }
-
-    const formData = new FormData(form);
-    const payload = {
-      captain_id: userData.user.id,
-      team_name: formData.get("team_name"),
-      division_id: formData.get("division_id"),
-    };
-
-    const { error } = await supabase
-      .from("team_creation_requests")
-      .insert(payload);
-
-    msg.textContent = error
-      ? "Error submitting team request."
-      : "Team submitted for approval.";
-
-    if (!error) form.reset();
-  });
-}
-
-// ADMIN
-function initAdmin() {
-  const form = document.getElementById("admin-login-form");
-  const msg = document.getElementById("admin-login-message");
-  const dashboard = document.getElementById("admin-dashboard");
-  const refreshBtn = document.getElementById("refresh-data");
-
-  if (!form || !supabase) return;
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(form);
-    const email = formData.get("email");
-    const password = formData.get("password");
-
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (error) {
-      msg.textContent = "Login failed.";
-    } else {
-      msg.textContent = "Logged in.";
-      form.style.display = "none";
-      if (dashboard) dashboard.style.display = "block";
-      loadPendingTeams();
-    }
-  });
-
-  if (refreshBtn) {
-    refreshBtn.addEventListener("click", () => {
-      loadPendingTeams();
-    });
+  if (!data || data.length === 0) {
+    container.innerHTML = "";
+    return;
   }
+
+  container.innerHTML = data
+    .map((t, i) => `<p>${i + 1}. ${t.name} — ${t.xp} XP</p>`)
+    .join("");
 }
 
-// PENDING TEAM REQUESTS
-async function loadPendingTeams() {
-  if (!supabase) return;
+async function loadTopPlayers() {
+  const container = document.getElementById("top-players");
+  if (!container) return;
 
   const { data } = await supabase
-    .from("team_creation_requests")
-    .select("*, divisions(name)")
-    .eq("approved", false);
+    .from("sector7_users")
+    .select("*")
+    .order("xp", { ascending: false })
+    .limit(5);
 
-  const list = document.getElementById("pending-team-list");
-  if (!list || !data) return;
+  if (!data || data.length === 0) {
+    container.innerHTML = "";
+    return;
+  }
 
-  list.innerHTML = "";
-  data.forEach((req) => {
-    const li = document.createElement("li");
-    li.innerHTML = `
-      <strong>${req.team_name}</strong> (${req.divisions.name})
-      <button onclick="approveTeam('${req.id}', '${req.team_name}', '${req.division_id}', '${req.captain_id}')">
-        Approve
-      </button>
-    `;
-    list.appendChild(li);
-  });
+  container.innerHTML = data
+    .map((p, i) => `<p>${i + 1}. ${p.username} — ${p.xp} XP</p>`)
+    .join("");
 }
 
-// APPROVE TEAM
-async function approveTeam(id, name, division_id, captain_id) {
-  if (!supabase) return;
+async function loadLiveMatches() {
+  const container = document.getElementById("live-matches");
+  if (!container) return;
 
-  await supabase.from("teams").insert({
-    name,
-    division_id,
-    created_by: captain_id,
-  });
+  const { data } = await supabase
+    .from("matches")
+    .select("*")
+    .eq("status", "approved")
+    .order("created_at", { ascending: false })
+    .limit(3);
 
-  await supabase
-    .from("team_creation_requests")
-    .update({ approved: true })
-    .eq("id", id);
+  if (!data || data.length === 0) {
+    container.innerHTML = "";
+    return;
+  }
 
-  loadPendingTeams();
+  container.innerHTML = data
+    .map(m => `<p>Match #${m.id} — ${m.type.toUpperCase()}</p>`)
+    .join("");
+}
+
+// -------------------------------
+// UTILITY HELPERS
+// -------------------------------
+function setText(id, text) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = text;
+}
+
+function setWidth(id, percent) {
+  const el = document.getElementById(id);
+  if (el) el.style.width = percent + "%";
+}
+
+function getVal(id) {
+  const el = document.getElementById(id);
+  return el ? el.value : "";
+}
+
+// -------------------------------
+// PAGE ROUTER
+// -------------------------------
+document.addEventListener("DOMContentLoaded", () => {
+  checkAuth();
+
+  loadProfile();
   loadTeams();
-}
+  loadPendingMatches();
+  loadPendingSniperMatches();
+
+  loadXPLeaderboard();
+  loadSniperLeaderboard();
+  loadCompetitiveLeaderboard();
+  loadSeasonalLeaderboard();
+
+  loadTopTeams();
+  loadTopPlayers();
+  loadLiveMatches();
+});
