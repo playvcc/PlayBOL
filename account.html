@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sector 7 | Account Settings</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="s7-header">
+    <div class="s7-header-inner">
+
+      <div class="s7-logo-block">
+        <div class="s7-logo-mark">S7</div>
+        <div class="s7-logo-text">
+          <span class="s7-logo-title">SECTOR 7</span>
+          <span class="s7-logo-sub">Black Ops II Competitive Network</span>
+        </div>
+      </div>
+
+      <nav class="s7-nav">
+        <a href="index.html">Home</a>
+        <a href="teams.html">Teams</a>
+        <a href="players.html">Players</a>
+        <a href="matches.html">Matches</a>
+        <a href="rankings.html">Rankings</a>
+        <a href="sniper.html">Sniper</a>
+        <a href="seasonal.html">Seasonal</a>
+        <a href="ladders.html">Ladders</a>
+        <a href="disputes.html">Disputes</a>
+        <a href="support.html">Support</a>
+        <a href="rules.html">Rules</a>
+        <a href="news.html">News</a>
+        <a href="events.html">Events</a>
+        <a href="forums.html">Forums</a>
+        <a href="media.html">Media</a>
+        <a href="hall_of_fame.html">Hall of Fame</a>
+        <a href="discord.html">Discord</a>
+        <a href="account.html">Account</a>
+      </nav>
+
+      <div class="s7-auth-block">
+        <button id="login-btn" class="s7-btn s7-btn-ghost">Login</button>
+        <button id="logout-btn" class="s7-btn s7-btn-accent" style="display:none;">Logout</button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- MAIN LAYOUT -->
+  <main class="s7-main">
+
+    <!-- LEFT SIDEBAR -->
+    <aside class="s7-sidebar">
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Account</h3>
+        <a href="account.html">Settings</a>
+        <a href="profile.html">Your Profile</a>
+        <a href="support.html">Support</a>
+      </section>
+
+      <button class="s7-cta">Join Sector 7 – Build Your Legacy</button>
+
+    </aside>
+
+    <!-- CENTER CONTENT -->
+    <section class="s7-content">
+
+      <!-- ACCOUNT INFO -->
+      <div class="s7-card">
+        <h2>Account Settings</h2>
+        <p style="color:var(--s7-text-muted); margin-bottom:10px;">
+          Manage your Sector 7 account details.
+        </p>
+
+        <p><strong>Email:</strong> <span id="acc-email">Loading...</span></p>
+        <p><strong>Username:</strong> <span id="acc-username">Loading...</span></p>
+      </div>
+
+      <!-- CHANGE USERNAME -->
+      <div class="s7-card">
+        <h3 class="s7-panel-title">Change Username</h3>
+
+        <input id="new-username" class="s7-input" placeholder="New username" />
+        <button id="change-username-btn" class="s7-btn s7-btn-accent" style="margin-top:10px;">
+          Update Username
+        </button>
+      </div>
+
+      <!-- CHANGE PASSWORD -->
+      <div class="s7-card">
+        <h3 class="s7-panel-title">Change Password</h3>
+
+        <input id="new-password" type="password" class="s7-input" placeholder="New password" />
+        <button id="change-password-btn" class="s7-btn s7-btn-accent" style="margin-top:10px;">
+          Update Password
+        </button>
+      </div>
+
+      <!-- DELETE ACCOUNT -->
+      <div class="s7-card">
+        <h3 class="s7-panel-title">Delete Account</h3>
+        <p style="color:var(--s7-text-muted);">This action cannot be undone.</p>
+
+        <button id="delete-account-btn" class="s7-btn s7-btn-ghost" style="margin-top:10px;">
+          Delete My Account
+        </button>
+      </div>
+
+    </section>
+
+    <!-- RIGHT SIDEBAR -->
+    <aside class="s7-right">
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Account Info</h3>
+        <p>Your account controls login and identity.</p>
+        <p>Profile controls gameplay stats.</p>
+      </section>
+
+      <section class="s7-panel">
+        <h3 class="s7-panel-title">Tips</h3>
+        <p>Use a strong password.</p>
+        <p>Keep your email up to date.</p>
+      </section>
+
+    </aside>
+
+  </main>
+
+  <!-- NOTIFICATION -->
+  <div id="notification"></div>
+
+  <!-- MAIN JS -->
+  <script src="assets/app.js"></script>
+
+  <script>
+    async function loadAccount() {
+      const { data } = await supabase.auth.getUser();
+      if (!data.user) return notify("You must be logged in");
+
+      document.getElementById("acc-email").textContent = data.user.email;
+
+      const { data: profile } = await supabase
+        .from("sector7_users")
+        .select("*")
+        .eq("id", data.user.id)
+        .single();
+
+      document.getElementById("acc-username").textContent = profile.username;
+    }
+
+    async function changeUsername() {
+      const newUsername = document.getElementById("new-username").value;
+
+      const { data } = await supabase.auth.getUser();
+      if (!data.user) return notify("You must be logged in");
+
+      await supabase
+        .from("sector7_users")
+        .update({ username: newUsername })
+        .eq("id", data.user.id);
+
+      notify("Username updated");
+      loadAccount();
+    }
+
+    async function changePassword() {
+      const newPassword = document.getElementById("new-password").value;
+
+      const { error } = await supabase.auth.updateUser({
+        password: newPassword
+      });
+
+      if (error) return notify(error.message);
+
+      notify("Password updated");
+    }
+
+    async function deleteAccount() {
+      const { data } = await supabase.auth.getUser();
+      if (!data.user) return notify("You must be logged in");
+
+      await supabase.from("sector7_users").delete().eq("id", data.user.id);
+      await supabase.auth.signOut();
+
+      notify("Account deleted");
+      window.location.href = "index.html";
+    }
+
+    document.getElementById("change-username-btn").onclick = changeUsername;
+    document.getElementById("change-password-btn").onclick = changePassword;
+    document.getElementById("delete-account-btn").onclick = deleteAccount;
+
+    loadAccount();
+  </script>
+
+</body>
+</html>
