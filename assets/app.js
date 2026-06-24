@@ -4,14 +4,12 @@ console.log("Sector 7 front-end loaded");
 const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";
 const SUPABASE_ANON_KEY = "YOUR_PUBLIC_ANON_KEY";
 
-// If you include supabase-js via CDN in <head>:
-// <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 let supabaseClient = null;
 if (typeof supabase !== "undefined") {
   supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 }
 
-// 2) Example: load 4v4 ladder into ladders.html
+// Load 4v4 ladder
 async function loadLadder4v4() {
   if (!supabaseClient) return;
 
@@ -43,7 +41,7 @@ async function loadLadder4v4() {
   });
 }
 
-// 3) Example: handle match report form (matches.html)
+// Handle match report
 async function handleReportMatch(event) {
   event.preventDefault();
   if (!supabaseClient) return;
@@ -75,7 +73,7 @@ async function handleReportMatch(event) {
   form.reset();
 }
 
-// 4) Init on page load
+// Init
 document.addEventListener("DOMContentLoaded", () => {
   const ladder4v4Table = document.getElementById("ladder-4v4");
   if (ladder4v4Table) {
