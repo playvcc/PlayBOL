@@ -2,141 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Sector 7 – XP Ladders</title>
+  <title>Ladders – Sector 7</title>
   <link rel="stylesheet" href="assets/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body>
-  <header class="s7-header">
-    <div class="s7-header-top">
-      <div class="s7-logo">
-        <span class="s7-logo-main">SECTOR 7</span>
-        <span class="s7-logo-sub">XP Ladders</span>
-      </div>
-      <nav class="s7-nav">
-        <a href="index.html">Home</a>
-        <a href="ladders.html" class="active">Ladders</a>
-        <a href="matches.html">Matches</a>
-        <a href="teams.html">Teams</a>
-        <a href="players.html">Players</a>
-        <a href="divisions.html">Divisions</a>
-        <a href="rankings.html">Rankings</a>
-        <a href="hall-of-fame.html">Hall of Fame</a>
-        <a href="recruitment.html">Recruitment</a>
-        <a href="rules.html">Rules</a>
-        <a href="support.html">Support</a>
-        <a href="admin.html">Admin</a>
-      </nav>
-    </div>
+<body data-page="ladders">
+  <!-- NAVBAR (same as index.html) -->
+  <!-- copy the same <nav> block from index.html here -->
+
+  <header class="sub-hero">
+    <h1>Ladders</h1>
+    <p>Ranked BO2 ladders for 4v4 and 5v5.</p>
   </header>
 
-  <main class="s7-main">
-    <section class="s7-layout">
-      <div class="s7-column s7-column-left">
-        <div class="card">
-          <h2>Ladders Overview</h2>
-          <p>Sector 7 uses XP ladders for seasonal competition. Teams earn XP by playing MLG‑ruleset matches.</p>
-          <ul>
-            <li>4v4 MLG BO2 – Main competitive ladder</li>
-            <li>2v2 BO2 – Duo ladder</li>
-            <li>Sniper Ladder – Sniper‑only rules</li>
-            <li>Casual Ladder – Low‑stakes XP for casual squads</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h2>XP Rules (Per Match)</h2>
-          <ul>
-            <li><strong>Win:</strong> +50 XP</li>
-            <li><strong>Loss:</strong> +10 XP</li>
-            <li><strong>Forfeit Win:</strong> +25 XP</li>
-            <li><strong>Forfeit Loss / No‑Show:</strong> 0 XP</li>
-          </ul>
-          <p class="s7-note">XP values can be tuned later in Supabase.</p>
-        </div>
-      </div>
-
-      <div class="s7-column s7-column-center">
-        <div class="card">
-          <h2>4v4 MLG BO2 Ladder</h2>
-          <table class="s7-table" id="ladder-4v4">
-            <thead>
-              <tr>
-                <th>Rank</th>
-                <th>Team</th>
-                <th>Record</th>
-                <th>XP</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>Oblivion</td>
-                <td>18–3</td>
-                <td>23,450</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Retro Ops</td>
-                <td>16–5</td>
-                <td>21,870</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="card">
-          <h2>2v2 BO2 Ladder</h2>
-          <table class="s7-table" id="ladder-2v2">
-            <thead>
-              <tr>
-                <th>Rank</th>
-                <th>Team</th>
-                <th>Record</th>
-                <th>XP</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>Duo Prime</td>
-                <td>22–4</td>
-                <td>19,800</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="s7-column s7-column-right">
-        <div class="card">
-          <h2>Sniper Ladder</h2>
-          <p>Sniper‑only matches with custom rules.</p>
-          <ul>
-            <li>BO2 Sniper‑only loadouts</li>
-            <li>Search &amp; Destroy focus</li>
-            <li>XP rules same as main ladder</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h2>Casual Ladder</h2>
-          <p>For fun squads that still want progression.</p>
-          <ul>
-            <li>Mixed modes</li>
-            <li>Lower XP rewards</li>
-            <li>Great for new players</li>
-          </ul>
-        </div>
-      </div>
+  <main>
+    <section>
+      <h2>Active Ladders</h2>
+      <table class="table" id="ladders-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Mode</th>
+            <th>Team Size</th>
+            <th>Season</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Filled by app.js from Supabase -->
+        </tbody>
+      </table>
     </section>
   </main>
 
-  <footer class="s7-footer">
-    <p>&copy; 2026 Sector 7 – XP Ladders</p>
+  <footer>
+    <p>Sector 7 &copy; 2026</p>
   </footer>
 
   <script src="assets/app.js"></script>
 </body>
 </html>
-
