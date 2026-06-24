@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sector 7 | Login</title>
+  <link rel="stylesheet" href="assets/style.css" />
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="s7-header">
+    <div class="s7-header-inner">
+
+      <div class="s7-logo-block">
+        <div class="s7-logo-mark">S7</div>
+        <div class="s7-logo-text">
+          <span class="s7-logo-title">SECTOR 7</span>
+          <span class="s7-logo-sub">Black Ops II Competitive Network</span>
+        </div>
+      </div>
+
+      <nav class="s7-nav">
+        <a href="index.html">Home</a>
+        <a href="login.html">Login</a>
+        <a href="register.html">Register</a>
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="s7-main auth-center">
+
+    <div class="auth-card">
+      <h2>Login</h2>
+
+      <label>Email</label>
+      <input id="login-email" class="s7-input" placeholder="Enter email" />
+
+      <label>Password</label>
+      <input id="login-password" type="password" class="s7-input" placeholder="Enter password" />
+
+      <button id="login-btn" class="s7-btn s7-btn-accent" style="margin-top:10px;">
+        Login
+      </button>
+
+      <p style="margin-top:15px; text-align:center;">
+        Don't have an account?
+        <a href="register.html" class="s7-link">Register here</a>
+      </p>
+    </div>
+
+  </main>
+
+  <!-- NOTIFICATION -->
+  <div id="notification"></div>
+
+  <script src="assets/app.js"></script>
+
+  <script>
+    async function loginUser() {
+      const email = document.getElementById("login-email").value;
+      const password = document.getElementById("login-password").value;
+
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if (error) return notify(error.message);
+
+      notify("Login successful");
+      window.location.href = "profile.html";
+    }
+
+    document.getElementById("login-btn").onclick = loginUser;
+  </script>
+
+</body>
+</html>
